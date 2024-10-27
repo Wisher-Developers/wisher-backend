@@ -11,12 +11,9 @@ import java.util.UUID
  */
 @Component
 class PingPongService(
-    private val pingPongRepository: PingPongRepository
+    private val pingPongRepository: PingPongRepository,
 ) {
-
-    suspend fun get(id: UUID): PingPong {
-        return pingPongRepository.get(id)
-    }
+    suspend fun get(id: UUID): PingPong = pingPongRepository.get(id)
 
     /**
      * Создать PingPong
@@ -26,15 +23,14 @@ class PingPongService(
      * @return созданный пингпонг
      */
     suspend fun create(value: String): PingPong {
-        val pingPong = PingPong(
-            id = UUID.randomUUID(),
-            value = value
-        )
+        val pingPong =
+            PingPong(
+                id = UUID.randomUUID(),
+                value = value,
+            )
 
         return pingPongRepository.save(pingPong)
     }
 
-    fun update(pingPong: PingPong): PingPong {
-        return pingPong.ultraChange(suffix = "chunga-changa")
-    }
+    fun update(pingPong: PingPong): PingPong = pingPong.ultraChange(suffix = "chunga-changa")
 }

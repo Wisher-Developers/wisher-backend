@@ -13,25 +13,26 @@ import java.util.UUID
 class PingController(
     private val pingPongService: PingPongService,
 ) {
-
     @GetMapping("{id}")
     suspend fun get(
-        @PathVariable id: UUID
+        @PathVariable id: UUID,
     ): ResponseEntity<PingPong> {
-        val pingPong = pingPongService
-            .get(id)
-            .let { encode(it) }
+        val pingPong =
+            pingPongService
+                .get(id)
+                .let { encode(it) }
 
         return ResponseEntity.ok(pingPong)
     }
 
     @PostMapping
     suspend fun create(
-        @RequestBody request: CreatePingPongRequest
+        @RequestBody request: CreatePingPongRequest,
     ): ResponseEntity<PingPong> {
-        val pingPong = pingPongService
-            .create(request.value)
-            .let { encode(it) }
+        val pingPong =
+            pingPongService
+                .create(request.value)
+                .let { encode(it) }
 
         return ResponseEntity(pingPong, HttpStatus.CREATED)
     }

@@ -10,9 +10,8 @@ import java.util.UUID
  */
 data class PingPong(
     val id: UUID = UUID.randomUUID(),
-    val value: String
+    val value: String,
 ) {
-
     /**
      * Супер классно изменить значение пингпонга
      *

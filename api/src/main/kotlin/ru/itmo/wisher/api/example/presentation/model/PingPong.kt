@@ -4,5 +4,5 @@ import java.util.UUID
 
 data class PingPong(
     val id: UUID,
-    val value: String
+    val value: String,
 )
