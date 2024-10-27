@@ -1,5 +1,3 @@
-@file:Suppress("ktlint:standard:no-wildcard-imports")
-
 package ru.itmo.wisher.api.unit.example
 
 import kotlinx.coroutines.runBlocking
