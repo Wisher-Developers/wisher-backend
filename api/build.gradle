@@ -33,6 +33,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-reactor"
 
+    implementation 'com.fasterxml.jackson.core:jackson-core'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-csv"
 

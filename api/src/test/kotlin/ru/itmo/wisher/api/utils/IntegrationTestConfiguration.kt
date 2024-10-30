@@ -18,7 +18,6 @@ abstract class IntegrationTestConfiguration {
         @BeforeAll
         @JvmStatic
         fun beforeAll() {
-            System.setProperty("DOCKER_HOST", "unix:///var/run/docker.sock")
             postgres.start()
         }
 
