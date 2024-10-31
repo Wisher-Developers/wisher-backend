@@ -14,4 +14,4 @@ jobs:
               uses: actions/checkout@v3
 
             - name: Run unit tests
-              run: 'cd api && ./gradlew test'
+              run: 'cd api && chmod +x api/gradlew && ./gradlew test'
