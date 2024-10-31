@@ -157,5 +157,21 @@ tasks.named('test') {
     useJUnitPlatform {
         excludeTags 'integration'
     }
+
     jvmArgs '-XX:+EnableDynamicAgentLoading', '-Djdk.instrument.traceUsage'
+}
+
+test {
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+        showStandardStreams = false
+    }
+
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "\nTest result: ${result.resultType}"
+            println "Test summary (${result.testCount} tests):\n- succeeded: ${result.successfulTestCount}\n- failed: ${result.failedTestCount}\n- skipped: ${result.skippedTestCount}"
+        }
+    }
 }
