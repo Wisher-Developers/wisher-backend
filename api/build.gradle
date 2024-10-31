@@ -154,6 +154,8 @@ tasks.register('integrationTest', Test) {
 }
 
 tasks.named('test') {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        excludeTags 'integration'
+    }
     jvmArgs '-XX:+EnableDynamicAgentLoading', '-Djdk.instrument.traceUsage'
 }

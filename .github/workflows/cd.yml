@@ -1,0 +1,31 @@
+name: Deploy to Remote Machine
+
+on:
+    push:
+        branches:
+            - main
+            - ci-cd-pipeline
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v3
+
+            -   name: Set up SSH
+                uses: webfactory/ssh-agent@v0.5.3
+                with:
+                    ssh-private-key: ${{ secrets.SSH_VDSINA_PRIVATE_KEY }}
+
+            -   name: Copy files to remote server
+                run: |
+                    scp -r ./* ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }}:/home/wisher-api
+
+            -   name: Deploy using Docker Compose
+                run: |
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-api && docker-compose down && docker-compose up -d'
