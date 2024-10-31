@@ -22,10 +22,10 @@ jobs:
                 with:
                     ssh-private-key: ${{ secrets.SSH_VDSINA_PRIVATE_KEY }}
 
-            -   name: Copy files to remote server
+            -   name: Pull latest changes from main
                 run: |
-                    scp -r ./* ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }}:/home/wisher-api
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && git pull origin main'
 
             -   name: Deploy using Docker Compose
                 run: |
-                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-api && docker-compose down && docker-compose up -d'
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose down && docker-compose up -d'
