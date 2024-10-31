@@ -170,8 +170,11 @@ test {
 
     afterSuite { desc, result ->
         if (!desc.parent) {
-            println "\nTest result: ${result.resultType}"
-            println "Test summary (${result.testCount} tests):\n- succeeded: ${result.successfulTestCount}\n- failed: ${result.failedTestCount}\n- skipped: ${result.skippedTestCount}"
+            println "\u001B[94m\nTest result: ${result.resultType}\u001B[0m"
+            println "\u001B[94mTest summary (${result.testCount} tests):\u001B[0m"
+            println "\u001B[32m- succeeded: ${result.successfulTestCount}\u001B[0m"
+            println "\u001B[31m- failed: ${result.failedTestCount}\u001B[0m"
+            println "\u001B[37m- skipped: ${result.skippedTestCount}\u001B[0m"
         }
     }
 }
