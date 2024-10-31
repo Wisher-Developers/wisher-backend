@@ -22,6 +22,10 @@ jobs:
                 with:
                     ssh-private-key: ${{ secrets.SSH_VDSINA_PRIVATE_KEY }}
 
+            -   name: Add remote server to known_hosts
+                run: |
+                    ssh-keyscan -H ${{ secrets.VDSINA_MACHINE_ADDRESS }} >> ~/.ssh/known_hosts        
+
             -   name: Pull latest changes from main
                 run: |
                     ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && git pull origin main'
