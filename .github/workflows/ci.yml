@@ -10,8 +10,13 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
+            -   name: Checkout repository
+                uses: actions/checkout@v3
 
-            - name: Run unit tests
-              run: 'cd api && chmod +x gradlew && ./gradlew test'
+            -   name: Set up JDK 21
+                uses: actions/setup-java@v3
+                with:
+                    java-version: '21'
+
+            -   name: Run unit tests
+                run: 'cd api && chmod +x gradlew && ./gradlew test'
