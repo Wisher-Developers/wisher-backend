@@ -2,7 +2,6 @@ package ru.itmo.wisher.api
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry
@@ -22,7 +21,7 @@ class GlobalApplicationConfiguration {
         object : WebMvcConfigurer {
             override fun addCorsMappings(registry: CorsRegistry) {
                 registry
-                    .addMapping("/**")
+                    .addMapping("/api/**")
                     .allowedOriginPatterns("*")
                     .allowedMethods("*")
                     .allowedHeaders("*")
