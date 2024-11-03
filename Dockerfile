@@ -3,7 +3,7 @@ FROM amazoncorretto:21 AS builder
 WORKDIR /app
 COPY api .
 RUN chmod +x gradlew
-RUN ./gradlew clean build
+RUN ./gradlew build
 
 # Stage 2: Create the final image
 FROM amazoncorretto:21

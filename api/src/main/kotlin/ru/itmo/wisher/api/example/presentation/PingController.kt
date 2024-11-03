@@ -18,27 +18,23 @@ class PingController(
     suspend fun get(
         @PathVariable id: UUID,
     ): ResponseEntity<PingPong> {
-        val header = HttpHeaders().apply { set("Access-Control-Allow-Origin", "*") }
-
         val pingPong =
             pingPongService
                 .get(id)
                 .let { encode(it) }
 
-        return ResponseEntity.ok().headers(header).body(pingPong)
+        return ResponseEntity.ok(pingPong)
     }
 
     @PostMapping
     suspend fun create(
         @RequestBody request: CreatePingPongRequest,
     ): ResponseEntity<PingPong> {
-        val header = HttpHeaders().apply { set("Access-Control-Allow-Origin", "*") }
-
         val pingPong =
             pingPongService
                 .create(request.value)
                 .let { encode(it) }
 
-        return ResponseEntity.status(HttpStatus.CREATED).headers(header).body(pingPong)
+        return ResponseEntity.status(HttpStatus.CREATED).body(pingPong)
     }
 }
