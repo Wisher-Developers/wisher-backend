@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import java.io.IOException
 
-
 @Configuration
 class GlobalApplicationConfiguration {
     @Bean
@@ -21,6 +20,25 @@ class GlobalApplicationConfiguration {
                 .allowedOriginPatterns("*")
                 .allowedMethods("*")
                 .allowedHeaders("*")
+                .allowCredentials(true)
+        }
+    }
+
+    @Bean
+    fun corsFilter(): Filter {
+        return object : Filter {
+            override fun init(filterConfig: FilterConfig?) {}
+
+            override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
+                val httpServletResponse = response as HttpServletResponse
+                httpServletResponse.setHeader("Access-Control-Allow-Origin", "*")
+                httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+                httpServletResponse.setHeader("Access-Control-Allow-Headers", "*")
+                httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true")
+                chain.doFilter(request, response)
+            }
+
+            override fun destroy() {}
         }
     }
 }
