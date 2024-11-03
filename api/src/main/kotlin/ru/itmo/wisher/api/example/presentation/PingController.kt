@@ -32,11 +32,13 @@ class PingController(
     suspend fun create(
         @RequestBody request: CreatePingPongRequest,
     ): ResponseEntity<PingPong> {
+        val header = HttpHeaders().apply { set("Access-Control-Allow-Origin", "*") }
+
         val pingPong =
             pingPongService
                 .create(request.value)
                 .let { encode(it) }
 
-        return ResponseEntity(pingPong, HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED).headers(header).body(pingPong)
     }
 }
