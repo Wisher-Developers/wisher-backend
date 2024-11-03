@@ -18,7 +18,6 @@ class GlobalApplicationConfiguration {
                 .allowedOriginPatterns("*")
                 .allowedMethods("*")
                 .allowedHeaders("*")
-                .allowCredentials(true)
         }
     }
 }
