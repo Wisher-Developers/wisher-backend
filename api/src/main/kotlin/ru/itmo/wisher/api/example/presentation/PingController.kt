@@ -1,5 +1,6 @@
 package ru.itmo.wisher.api.example.presentation
 
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -17,12 +18,14 @@ class PingController(
     suspend fun get(
         @PathVariable id: UUID,
     ): ResponseEntity<PingPong> {
+        val header = HttpHeaders().apply { set("Access-Control-Allow-Origin", "*") }
+
         val pingPong =
             pingPongService
                 .get(id)
                 .let { encode(it) }
 
-        return ResponseEntity.ok(pingPong)
+        return ResponseEntity.ok().headers(header).body(pingPong)
     }
 
     @PostMapping
