@@ -8,6 +8,7 @@ import ru.itmo.wisher.api.example.presentation.model.CreatePingPongRequest
 import ru.itmo.wisher.api.example.presentation.model.PingPong
 import java.util.UUID
 
+@CrossOrigin(exposedHeaders = ["*"])
 @RestController
 @RequestMapping("api/ping")
 class PingController(
