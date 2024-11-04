@@ -21,10 +21,9 @@ class GlobalApplicationConfiguration {
         object : WebMvcConfigurer {
             override fun addCorsMappings(registry: CorsRegistry) {
                 registry
-                    .addMapping("/api/**")
-                    .allowedOriginPatterns("*")
-                    .allowedMethods("*")
-                    .allowedHeaders("*")
+                    .addMapping("/**")
+                    .allowedOrigins("*")
+                    .allowedMethods("GET", "POST", "PUT", "DELETE")
             }
         }
 }
