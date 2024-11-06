@@ -9,7 +9,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import ru.itmo.wisher.api.example.application.PingPongRepository
 import ru.itmo.wisher.api.example.application.PingPongService
-import ru.itmo.wisher.api.example.application.domain.PingPong
+import ru.itmo.wisher.api.example.domain.PingPong
 import java.util.*
 
 class PingPongServiceTest {

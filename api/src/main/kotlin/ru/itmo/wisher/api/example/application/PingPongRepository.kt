@@ -1,6 +1,6 @@
 package ru.itmo.wisher.api.example.application
 
-import ru.itmo.wisher.api.example.application.domain.PingPong
+import ru.itmo.wisher.api.example.domain.PingPong
 import java.util.UUID
 
 interface PingPongRepository {
