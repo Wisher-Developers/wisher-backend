@@ -17,10 +17,14 @@ class AuthController(
     suspend fun signUp(
         @RequestBody request: SignUpRequestDto,
     ): ResponseEntity<AuthResponse> {
-        val token = authService.signUp(request.toDomain())
-        val response = AuthResponse(token)
-
-        return ResponseEntity.ok(response)
+        try {
+            val token = authService.signUp(request.toDomain())
+            val response = AuthResponse(token)
+            return ResponseEntity.ok(response)
+        } catch (e: Exception) {
+            println(e)
+            throw e
+        }
     }
 
     @PostMapping("login")
