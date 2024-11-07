@@ -13,11 +13,9 @@ class UserRepository(
     private val userJpaRepository: UserJpaRepository,
 ) : IUserRepository {
     override suspend fun save(user: User): User {
-        val entity = userCodec.encode(user)
-
         return withContext(Dispatchers.IO) {
-            userJpaRepository
-                .save(entity)
+            userCodec.encode(user)
+                .let { userJpaRepository.save(it) }
                 .let { userCodec.decode(it) }
         }
     }

@@ -13,7 +13,7 @@ interface UserJpaRepository : CrudRepository<UserEntity, UUID> {
     fun findByUsername(username: String): UserEntity?
 }
 
-@Table(name = "user")
+@Table(name = "users")
 @Entity
 class UserEntity(
     @Id
