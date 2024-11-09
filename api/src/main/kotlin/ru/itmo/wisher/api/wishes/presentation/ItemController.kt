@@ -20,37 +20,22 @@ class ItemController(
     fun create(
         @RequestBody request: CreateItemRequestDto,
     ): ResponseEntity<Void> {
-        try {
-            itemService.create(request.toDomain())
-            return ResponseEntity.noContent().build()
-        } catch (e: Exception) {
-            println(e)
-            throw e
-        }
+        itemService.create(request.toDomain())
+        return ResponseEntity.noContent().build()
     }
 
     @PostMapping("copy")
     fun copy(
         @RequestBody request: CopyItemRequestDto,
     ): ResponseEntity<Void> {
-        try {
-            itemService.copy(request.toDomain())
-            return ResponseEntity.noContent().build()
-        } catch (e: Exception) {
-            println(e)
-            throw e
-        }
+        itemService.copy(request.toDomain())
+        return ResponseEntity.noContent().build()
     }
 
     @GetMapping("{id}")
     fun get(
         @PathVariable id: UUID,
     ): ResponseEntity<ItemResponse> {
-        try {
-            return ResponseEntity.ok(itemService.getById(id).toResponse())
-        } catch (e: Exception) {
-            println(e)
-            throw e
-        }
+        return ResponseEntity.ok(itemService.getById(id).toResponse())
     }
 }
