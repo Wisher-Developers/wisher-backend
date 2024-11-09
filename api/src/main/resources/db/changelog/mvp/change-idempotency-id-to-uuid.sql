@@ -1,4 +1,4 @@
 --liquibase formatted sql
---changeset garnetaki:tables-init
+--changeset garnetaki:add-items
 
 ALTER TABLE item ALTER COLUMN idempotency_id TYPE UUID;
