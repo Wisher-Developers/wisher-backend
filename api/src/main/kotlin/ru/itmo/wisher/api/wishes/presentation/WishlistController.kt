@@ -40,4 +40,16 @@ class WishlistController(
             throw e
         }
     }
+
+    @GetMapping("/user/{id}")
+    suspend fun get(
+        @PathVariable id: UUID,
+    ): ResponseEntity<WishlistResponse> {
+        try {
+            return ResponseEntity.ok(wishlistService.getByOwnerId(id).map { it.toResponse() })
+        } catch (e: Exception) {
+            println(e)
+            throw e
+        }
+    }
 }
