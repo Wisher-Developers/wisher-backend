@@ -2,10 +2,14 @@ package ru.itmo.wisher.api.wishes.infrastructure.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Component
+import ru.itmo.wisher.api.wishes.domain.Wishlist
 import java.util.UUID
 
 @Component
@@ -31,8 +35,9 @@ class ItemEntity(
     var picture: String? = null,
     @Column(name = "description")
     var description: String? = null,
-    @Column(name = "wishlist_id")
-    var wishlistId: UUID,
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "wishlist_id")
+    val wishlist: Wishlist,
     @Column(name = "position")
     var position: Int,
     @Column(name = "idempotency_id")
