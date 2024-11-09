@@ -14,14 +14,10 @@ import java.util.*
 class JwtService {
 
     @Value("\${security.jwt.secret-key}")
-    private val secretKey: String? = null
+    private lateinit var secretKey: String
 
     @Value("\${security.jwt.expiration-time}")
     val expirationTime: Long = 0
-
-    private fun key(): Key {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey))
-    }
 
     fun generateToken(authentication: Authentication): String {
         val username = authentication.name
@@ -49,14 +45,18 @@ class JwtService {
     }
 
     fun validateToken(token: String?): Boolean {
-        try {
+        return try {
             Jwts.parserBuilder()
                 .setSigningKey(key())
                 .build()
                 .parseClaimsJws(token)
-            return true
+            true
         } catch (e: Exception) {
-            return false
+            false
         }
+    }
+
+    private fun key(): Key {
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey))
     }
 }

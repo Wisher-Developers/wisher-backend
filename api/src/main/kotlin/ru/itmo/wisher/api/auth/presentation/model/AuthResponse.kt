@@ -1,4 +1,4 @@
-package ru.itmo.wisher.api.auth.presentation
+package ru.itmo.wisher.api.auth.presentation.model
 
 import ru.itmo.wisher.api.auth.domain.JwtToken
 
