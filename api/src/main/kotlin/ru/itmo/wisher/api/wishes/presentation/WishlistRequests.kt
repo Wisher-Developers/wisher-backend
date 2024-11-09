@@ -8,7 +8,6 @@ data class CreateWishlistRequestDto(
     var description: String? = null,
     var accessLink: String? = null,
     var privateMode: PrivateMode = PrivateMode.PUBLIC,
-    var ownerId: UUID,
 )
 
 data class UpdateWishlistRequestDto(

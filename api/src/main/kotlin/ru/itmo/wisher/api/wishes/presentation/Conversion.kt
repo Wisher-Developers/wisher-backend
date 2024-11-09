@@ -40,7 +40,7 @@ fun Item.toResponse() =
         price = price,
         picture = picture,
         description = description,
-        wishlistId = wishlist.id,
+        wishlistId = wishlistId,
         position = position,
     )
 
@@ -50,7 +50,6 @@ fun CreateWishlistRequestDto.toDomain() =
         description = description,
         accessLink = accessLink,
         privateMode = privateMode,
-        ownerId = ownerId,
     )
 
 fun Wishlist.toResponse() =
@@ -61,5 +60,5 @@ fun Wishlist.toResponse() =
         accessLink = accessLink,
         privateMode = privateMode,
         position = position,
-        ownerId = owner.id,
+        ownerId = ownerId,
     )

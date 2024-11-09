@@ -5,13 +5,10 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.Id
-import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Component
-import ru.itmo.wisher.api.auth.domain.User
-import ru.itmo.wisher.api.wishes.domain.Item
 import ru.itmo.wisher.api.wishes.domain.PrivateMode
 import java.util.UUID
 
@@ -36,9 +33,8 @@ class WishlistEntity(
     var privateMode: PrivateMode,
     @Column(name = "position")
     var position: Int,
-    @ManyToOne
     @Column(name = "owner_id")
-    var owner: User,
-    @OneToMany(cascade = [(CascadeType.ALL)], fetch = FetchType.LAZY, mappedBy = "wishlist")
-    var items: MutableList<Item>,
+    var ownerId: UUID,
+    @OneToMany(cascade = [(CascadeType.ALL)], fetch = FetchType.LAZY, mappedBy = "wishlistId")
+    var items: MutableList<ItemEntity>,
 )

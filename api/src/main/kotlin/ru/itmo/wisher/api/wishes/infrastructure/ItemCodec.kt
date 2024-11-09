@@ -16,7 +16,7 @@ class ItemCodec {
             price = domain.price,
             picture = domain.picture,
             description = domain.description,
-            wishlist = domain.wishlist,
+            wishlistId = domain.wishlistId,
             position = domain.position,
             idempotencyId = domain.idempotencyId,
         )
@@ -30,7 +30,7 @@ class ItemCodec {
             price = entity.price,
             picture = entity.picture,
             description = entity.description,
-            wishlist = entity.wishlist,
+            wishlistId = entity.wishlistId,
             position = entity.position,
             idempotencyId = entity.idempotencyId,
         )

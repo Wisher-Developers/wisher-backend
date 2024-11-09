@@ -5,7 +5,9 @@ import ru.itmo.wisher.api.wishes.domain.Wishlist
 import ru.itmo.wisher.api.wishes.infrastructure.entity.WishlistEntity
 
 @Component
-class WishlistCodec {
+class WishlistCodec(
+    private val itemCodec: ItemCodec,
+) {
 
     fun encode(domain: Wishlist) =
         WishlistEntity(
@@ -15,8 +17,8 @@ class WishlistCodec {
             accessLink = domain.accessLink,
             privateMode = domain.privateMode,
             position = domain.position,
-            owner = domain.owner,
-            items = domain.items,
+            ownerId = domain.ownerId,
+            items = domain.items.map { itemCodec.encode(it) }.toMutableList(),
         )
 
     fun decode(entity: WishlistEntity) =
@@ -27,7 +29,7 @@ class WishlistCodec {
             accessLink = entity.accessLink,
             privateMode = entity.privateMode,
             position = entity.position,
-            owner = entity.owner,
-            items = entity.items,
+            ownerId = entity.ownerId,
+            items = entity.items.map { itemCodec.decode(it) }.toMutableList(),
         )
 }
