@@ -10,7 +10,7 @@ import java.util.UUID
 
 @Component
 interface ItemJpaRepository : CrudRepository<ItemEntity, UUID> {
-    fun findByWishlistId(wishlistId: String): List<ItemEntity>
+    fun findByWishlistId(wishlistId: UUID): List<ItemEntity>
 }
 
 @Table(name = "item")
