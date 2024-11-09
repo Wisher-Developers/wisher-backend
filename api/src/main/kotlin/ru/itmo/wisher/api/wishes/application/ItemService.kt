@@ -11,7 +11,7 @@ class ItemService(
     private val itemRepository: ItemRepository,
 ) {
 
-    suspend fun create(request: CreateItemRequest) {
+    fun create(request: CreateItemRequest) {
         val item =
             Item(
                 id = UUID.randomUUID(),
@@ -29,7 +29,7 @@ class ItemService(
         itemRepository.save(item)
     }
 
-    suspend fun copy(request: CopyItemRequest) {
+    fun copy(request: CopyItemRequest) {
         val oldItem = getById(request.oldId)
         val item =
             Item(
@@ -48,7 +48,7 @@ class ItemService(
         itemRepository.save(item)
     }
 
-    suspend fun getById(id: UUID): Item {
+    fun getById(id: UUID): Item {
         return itemRepository.getById(id)
     }
 }

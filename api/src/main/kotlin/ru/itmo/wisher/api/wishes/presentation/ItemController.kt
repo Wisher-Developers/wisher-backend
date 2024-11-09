@@ -17,7 +17,7 @@ class ItemController(
 ) {
 
     @PostMapping("create")
-    suspend fun create(
+    fun create(
         @RequestBody request: CreateItemRequestDto,
     ): ResponseEntity<Void> {
         try {
@@ -30,7 +30,7 @@ class ItemController(
     }
 
     @PostMapping("copy")
-    suspend fun copy(
+    fun copy(
         @RequestBody request: CopyItemRequestDto,
     ): ResponseEntity<Void> {
         try {
@@ -43,7 +43,7 @@ class ItemController(
     }
 
     @GetMapping("{id}")
-    suspend fun get(
+    fun get(
         @PathVariable id: UUID,
     ): ResponseEntity<ItemResponse> {
         try {

@@ -14,19 +14,15 @@ class ItemRepository(
     private val itemCodec: ItemCodec,
     private val itemJpaRepository: ItemJpaRepository,
 ) : IItemRepository {
-    override suspend fun save(item: Item): Item {
-        return withContext(Dispatchers.IO) {
-            itemCodec.encode(item)
-                .let { itemJpaRepository.save(it) }
-                .let { itemCodec.decode(it) }
-        }
+    override fun save(item: Item): Item {
+        return itemCodec.encode(item)
+            .let { itemJpaRepository.save(it) }
+            .let { itemCodec.decode(it) }
     }
 
-    override suspend fun findById(id: UUID): Item? {
-        return withContext(Dispatchers.IO) {
-            itemJpaRepository
-                .findByIdOrNull(id)
-                ?.let { itemCodec.decode(it) }
-        }
+    override fun findById(id: UUID): Item? {
+        return itemJpaRepository
+            .findByIdOrNull(id)
+            ?.let { itemCodec.decode(it) }
     }
 }
