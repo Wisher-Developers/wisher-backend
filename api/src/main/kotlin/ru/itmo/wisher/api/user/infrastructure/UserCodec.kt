@@ -1,8 +1,8 @@
-package ru.itmo.wisher.api.auth.infrastructure
+package ru.itmo.wisher.api.user.infrastructure
 
 import org.springframework.stereotype.Component
-import ru.itmo.wisher.api.auth.domain.User
-import ru.itmo.wisher.api.auth.infrastructure.entity.UserEntity
+import ru.itmo.wisher.api.user.domain.User
+import ru.itmo.wisher.api.user.infrastructure.entity.UserEntity
 
 @Component
 class UserCodec {

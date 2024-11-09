@@ -1,6 +1,7 @@
-package ru.itmo.wisher.api.auth.domain
+package ru.itmo.wisher.api.user.domain
 
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
 
@@ -25,4 +26,8 @@ data class User(
     override fun isCredentialsNonExpired() = true
 
     override fun isEnabled() = true
+
+    companion object {
+        fun current(): User = SecurityContextHolder.getContext().authentication.principal as User
+    }
 }
