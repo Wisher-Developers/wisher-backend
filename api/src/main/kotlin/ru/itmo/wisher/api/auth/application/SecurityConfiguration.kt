@@ -19,8 +19,8 @@ import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
-import ru.itmo.wisher.api.auth.domain.exception.UserException
-import java.util.*
+import ru.itmo.wisher.api.user.application.UserRepository
+import ru.itmo.wisher.api.user.domain.exception.NoSuchUsername
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -41,7 +41,7 @@ class SecurityConfiguration : WebMvcConfigurer {
         runBlocking {
             userRepository.findByUsername(username)
         }
-            ?: throw UserException(username)
+            ?: throw NoSuchUsername(username)
     }
 
     @Bean
@@ -62,8 +62,8 @@ class SecurityConfiguration : WebMvcConfigurer {
         http
             .csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/api/auth/signup").permitAll()
-                it.requestMatchers("/api/auth/login").permitAll()
+                it.requestMatchers("/api/auth/**").permitAll()
+                it.requestMatchers("/api/users/{id}").permitAll()
                 it.anyRequest().authenticated()
             }
             .sessionManagement {

@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.itmo.wisher.api.auth.application.AuthService
+import ru.itmo.wisher.api.auth.presentation.model.AuthResponse
+import ru.itmo.wisher.api.auth.presentation.model.LogInRequestDto
+import ru.itmo.wisher.api.auth.presentation.model.SignUpRequestDto
 
 @RestController
 @RequestMapping("api/auth")

@@ -6,11 +6,11 @@ import java.util.UUID
 
 interface ItemRepository {
 
-    suspend fun save(item: Item): Item
+    fun save(item: Item): Item
 
-    suspend fun findById(id: UUID): Item?
+    fun findById(id: UUID): Item?
 
-    suspend fun getById(id: UUID): Item {
+    fun getById(id: UUID): Item {
         return findById(id)
             ?: throw ItemException(id)
     }

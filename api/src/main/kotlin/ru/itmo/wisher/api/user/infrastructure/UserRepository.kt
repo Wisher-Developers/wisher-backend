@@ -1,10 +1,10 @@
-package ru.itmo.wisher.api.auth.infrastructure
+package ru.itmo.wisher.api.user.infrastructure
 
 import org.springframework.stereotype.Component
-import ru.itmo.wisher.api.auth.domain.User
-import ru.itmo.wisher.api.auth.infrastructure.entity.UserJpaRepository
+import ru.itmo.wisher.api.user.domain.User
+import ru.itmo.wisher.api.user.infrastructure.entity.UserJpaRepository
 import java.util.UUID
-import ru.itmo.wisher.api.auth.application.UserRepository as IUserRepository
+import ru.itmo.wisher.api.user.application.UserRepository as IUserRepositoryinfrastructure/UserRepository.kt
 
 @Component
 class UserRepository(
@@ -16,6 +16,13 @@ class UserRepository(
         return userCodec
             .encode(user)
             .let { userJpaRepository.save(it) }
+            .let { userCodec.decode(it) }
+    }
+
+    override fun getById(id: UUID): User {
+        return userJpaRepository
+            .findById(id)
+            .orElseThrow()
             .let { userCodec.decode(it) }
     }
 
