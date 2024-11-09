@@ -5,6 +5,11 @@ import ru.itmo.wisher.api.wishes.domain.CreateItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateWishlistRequest
 import ru.itmo.wisher.api.wishes.domain.Item
 import ru.itmo.wisher.api.wishes.domain.Wishlist
+import ru.itmo.wisher.api.wishes.presentation.model.CopyItemRequestDto
+import ru.itmo.wisher.api.wishes.presentation.model.CreateItemRequestDto
+import ru.itmo.wisher.api.wishes.presentation.model.CreateWishlistRequestDto
+import ru.itmo.wisher.api.wishes.presentation.model.ItemResponse
+import ru.itmo.wisher.api.wishes.presentation.model.WishlistResponse
 
 fun CreateItemRequestDto.toDomain() =
     CreateItemRequest(

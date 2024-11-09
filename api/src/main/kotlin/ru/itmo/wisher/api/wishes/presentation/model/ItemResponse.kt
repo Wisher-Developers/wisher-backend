@@ -1,4 +1,4 @@
-package ru.itmo.wisher.api.wishes.presentation
+package ru.itmo.wisher.api.wishes.presentation.model
 
 import java.util.UUID
 

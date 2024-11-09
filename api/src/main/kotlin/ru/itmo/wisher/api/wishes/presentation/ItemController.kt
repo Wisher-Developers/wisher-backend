@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.itmo.wisher.api.wishes.application.ItemService
+import ru.itmo.wisher.api.wishes.presentation.model.CopyItemRequestDto
+import ru.itmo.wisher.api.wishes.presentation.model.CreateItemRequestDto
+import ru.itmo.wisher.api.wishes.presentation.model.ItemResponse
 import java.util.UUID
 
 @RestController

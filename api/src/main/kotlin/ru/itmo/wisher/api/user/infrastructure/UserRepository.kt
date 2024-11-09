@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.user.domain.User
 import ru.itmo.wisher.api.user.infrastructure.entity.UserJpaRepository
 import java.util.UUID
-import ru.itmo.wisher.api.user.application.UserRepository as IUserRepositoryinfrastructure/UserRepository.kt
+import ru.itmo.wisher.api.user.application.UserRepository as IUserRepository
 
 @Component
 class UserRepository(

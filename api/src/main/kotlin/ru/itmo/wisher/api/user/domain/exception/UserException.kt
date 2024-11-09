@@ -6,6 +6,6 @@ data class NoSuchUsername(
     val username: String,
 ) : RuntimeException("User with username $username not found")
 
-data class NoSuchUserIdException(
+data class NoSuchId(
     val id: UUID,
 ) : RuntimeException("User with id $id not found")

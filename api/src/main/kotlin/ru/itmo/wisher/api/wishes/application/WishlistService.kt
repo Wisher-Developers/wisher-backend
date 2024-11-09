@@ -1,8 +1,7 @@
 package ru.itmo.wisher.api.wishes.application
 
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
-import ru.itmo.wisher.api.auth.domain.User
+import ru.itmo.wisher.api.user.domain.User
 import ru.itmo.wisher.api.wishes.domain.CreateWishlistRequest
 import ru.itmo.wisher.api.wishes.domain.Wishlist
 import java.util.UUID
@@ -13,7 +12,7 @@ class WishlistService(
 ) {
 
     fun create(request: CreateWishlistRequest) {
-        val user = SecurityContextHolder.getContext().authentication.principal as User
+        val user = User.current()
         val wishlist =
             Wishlist(
                 id = UUID.randomUUID(),
