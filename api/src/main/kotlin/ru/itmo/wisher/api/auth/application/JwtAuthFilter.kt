@@ -24,14 +24,10 @@ class JwtAuthFilter(
     ) {
         val token: String? = getTokenFromRequest(request)
 
-        println("TOKEN: $token")
-
-        if (StringUtils.hasText(token) && jwtService.validateToken(token)) {
+        if (jwtService.validateToken(token)) {
             val username: String = jwtService.getUsername(token)
-            println("username: $username")
             val userDetails = userDetailsService.loadUserByUsername(username)
 
-            println("userDeta: $userDetails")
             val authToken =
                 UsernamePasswordAuthenticationToken(
                     userDetails,
@@ -50,9 +46,7 @@ class JwtAuthFilter(
         val authHeader = request.getHeader("Authorization")
 
         if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer "))
-            return authHeader.substring(
-                7,
-            )
+            return authHeader.substring(7)
 
         return null
     }

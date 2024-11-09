@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
 import java.security.Key
-import java.time.LocalDate
-import java.util.Map
+import java.time.Instant
+import java.util.*
 
 @Component
 class JwtService {
@@ -25,23 +25,15 @@ class JwtService {
 
     fun generateToken(authentication: Authentication): String {
         val username = authentication.name
-        val now = LocalDate.now()
-        val expirationDate = now.plusDays(expirationTime)
+
+        val issuedAt = Instant.now()
+        val expiresAt = issuedAt.plusSeconds(expirationTime)
 
         return Jwts.builder()
-            .setIssuedAt(java.sql.Date.valueOf(now))
-            .setExpiration(java.sql.Date.valueOf(expirationDate))
+            .setIssuedAt(Date.from(issuedAt))
+            .setExpiration(Date.from(expiresAt))
             .addClaims(
-                Map.ofEntries<String, Any>(
-                    Map.entry("username", username),
-                    /*Map.entry(
-                        "roles",
-                        authentication.authorities
-                            .stream()
-                            .map { role: GrantedAuthority? -> role.toString().substring(5) }
-                            .toArray(),
-                    ),*/
-                ),
+                mapOf("username" to username),
             )
             .signWith(key(), SignatureAlgorithm.HS256)
             .compact()

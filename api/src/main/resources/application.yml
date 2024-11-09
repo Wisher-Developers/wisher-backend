@@ -8,10 +8,12 @@ spring:
 security:
     jwt:
         secret-key: ${JWT_SECRET_KEY}
-        expiration-time: 7
+        expiration-time: 604800  # = 1 неделя
 
 logging:
     level:
         org:
             springframework:
-                security=DEBUG:
+                security: DEBUG
+                web:
+                    FilterChainProxy: DEBUG

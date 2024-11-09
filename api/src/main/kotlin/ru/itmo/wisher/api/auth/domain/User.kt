@@ -11,6 +11,7 @@ data class User(
     val avatarLink: String? = null,
     private val password: String,
 ) : UserDetails {
+
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
 
     override fun getPassword() = password
