@@ -12,7 +12,7 @@ class WishlistService(
     private val wishlistRepository: WishlistRepository,
 ) {
 
-    suspend fun create(request: CreateWishlistRequest) {
+    fun create(request: CreateWishlistRequest) {
         val user = SecurityContextHolder.getContext().authentication.principal as User
         val wishlist =
             Wishlist(
@@ -28,11 +28,11 @@ class WishlistService(
         wishlistRepository.save(wishlist)
     }
 
-    suspend fun getByOwnerId(id: UUID): List<Wishlist> {
+    fun getByOwnerId(id: UUID): List<Wishlist> {
         return wishlistRepository.findByOwnerId(id)
     }
 
-    suspend fun getById(id: UUID): Wishlist {
+    fun getById(id: UUID): Wishlist {
         return wishlistRepository.getById(id)
     }
 }

@@ -6,13 +6,13 @@ import java.util.UUID
 
 interface WishlistRepository {
 
-    suspend fun save(wishlist: Wishlist): Wishlist
+    fun save(wishlist: Wishlist): Wishlist
 
-    suspend fun findById(id: UUID): Wishlist?
+    fun findById(id: UUID): Wishlist?
 
-    suspend fun findByOwnerId(id: UUID): List<Wishlist>
+    fun findByOwnerId(id: UUID): List<Wishlist>
 
-    suspend fun getById(id: UUID): Wishlist {
+    fun getById(id: UUID): Wishlist {
         return findById(id)
             ?: throw WishlistException(id)
     }

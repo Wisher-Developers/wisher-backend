@@ -17,39 +17,24 @@ class WishlistController(
 ) {
 
     @PostMapping("create")
-    suspend fun create(
+    fun create(
         @RequestBody request: CreateWishlistRequestDto,
     ): ResponseEntity<Void> {
-        try {
-            wishlistService.create(request.toDomain())
-            return ResponseEntity.noContent().build()
-        } catch (e: Exception) {
-            println(e)
-            throw e
-        }
+        wishlistService.create(request.toDomain())
+        return ResponseEntity.noContent().build()
     }
 
     @GetMapping("{id}")
-    suspend fun get(
+    fun get(
         @PathVariable id: UUID,
     ): ResponseEntity<WishlistResponse> {
-        try {
-            return ResponseEntity.ok(wishlistService.getById(id).toResponse())
-        } catch (e: Exception) {
-            println(e)
-            throw e
-        }
+        return ResponseEntity.ok(wishlistService.getById(id).toResponse())
     }
 
     @GetMapping("/user/{id}")
-    suspend fun getByOwnerId(
+    fun getByOwnerId(
         @PathVariable id: UUID,
     ): ResponseEntity<List<WishlistResponse>> {
-        try {
-            return ResponseEntity.ok(wishlistService.getByOwnerId(id).map { it.toResponse() })
-        } catch (e: Exception) {
-            println(e)
-            throw e
-        }
+        return ResponseEntity.ok(wishlistService.getByOwnerId(id).map { it.toResponse() })
     }
 }
