@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @SpringBootApplication
-@EnableWebSecurity(debug = true)
 class ApiApplication
 
 fun main(args: Array<String>) {
