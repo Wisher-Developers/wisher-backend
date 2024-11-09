@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @SpringBootApplication
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 class ApiApplication
 
 fun main(args: Array<String>) {
@@ -20,6 +20,10 @@ fun main(args: Array<String>) {
 @EnableWebMvc
 class WebConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**")
+        registry
+            .addMapping("/**")
+            .allowedMethods("*")
+            .allowedOriginPatterns("/**")
+            .allowCredentials(true)
     }
 }

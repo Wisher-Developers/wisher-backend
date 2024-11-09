@@ -21,7 +21,6 @@ import ru.itmo.wisher.api.auth.domain.exception.UserException
 
 @Configuration
 @EnableMethodSecurity
-@EnableWebSecurity(debug = true)
 class SecurityConfiguration {
 
     @Bean
