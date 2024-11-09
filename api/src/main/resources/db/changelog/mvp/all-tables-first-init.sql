@@ -31,7 +31,7 @@ CREATE TABLE item (
     description      VARCHAR(10000),
     wishlist_id      UUID            NOT NULL,
     position         INTEGER         NOT NULL,
-    idempotency_id   UUID            NOT NULL,
+    idempotency_id   INTEGER         NOT NULL,
 
     FOREIGN KEY (wishlist_id) REFERENCES wishlist(id)
 );
