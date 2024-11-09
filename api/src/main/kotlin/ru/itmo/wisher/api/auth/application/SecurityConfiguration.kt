@@ -3,26 +3,28 @@ package ru.itmo.wisher.api.auth.application
 import kotlinx.coroutines.runBlocking
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import ru.itmo.wisher.api.auth.domain.exception.UserException
+import java.util.*
 
 @Configuration
-@EnableMethodSecurity
 @EnableWebSecurity(debug = true)
-class SecurityConfiguration {
+class SecurityConfiguration : WebMvcConfigurer {
 
     @Bean
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager {
@@ -58,7 +60,6 @@ class SecurityConfiguration {
         authenticationProvider: AuthenticationProvider,
     ): SecurityFilterChain {
         http
-            .cors { it.disable() }
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it.requestMatchers("/api/auth/signup").permitAll()
@@ -69,11 +70,6 @@ class SecurityConfiguration {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
             .authenticationProvider(authenticationProvider)
-            .exceptionHandling {
-                it.authenticationEntryPoint(
-                    HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
-                )
-            }
             .anonymous { it.disable() }
             .addFilterBefore(
                 jwtAuthenticationFilter,
@@ -81,5 +77,24 @@ class SecurityConfiguration {
             )
 
         return http.build()
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOriginPatterns = listOf("/**")
+        configuration.allowedMethods = listOf("*")
+        configuration.allowedHeaders = listOf("*")
+        configuration.allowCredentials = true
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
+    }
+
+    override fun addCorsMappings(registry: CorsRegistry) {
+        registry
+            .addMapping("/**")
+            .allowedMethods("*")
+            .allowedMethods("*")
     }
 }
