@@ -8,4 +8,10 @@ spring:
 security:
     jwt:
         secret-key: ${JWT_SECRET_KEY}
-        expiration-time: 604800000
+        expiration-time: 7
+
+logging:
+    level:
+        org:
+            springframework:
+                security=DEBUG:

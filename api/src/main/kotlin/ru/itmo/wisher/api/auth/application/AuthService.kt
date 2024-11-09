@@ -2,6 +2,7 @@ package ru.itmo.wisher.api.auth.application
 
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.auth.domain.JwtToken
 import ru.itmo.wisher.api.auth.domain.SignUpRequest
@@ -13,26 +14,22 @@ class AuthService(
     private val authenticationManager: AuthenticationManager,
 ) {
 
-    suspend fun signUp(request: SignUpRequest): JwtToken {
+    suspend fun signUp(request: SignUpRequest) {
         userService.create(request)
-
-        return logIn(
-            username = request.username,
-            password = request.password,
-        )
     }
 
     suspend fun logIn(username: String, password: String): JwtToken {
-        val authToken =
-            UsernamePasswordAuthenticationToken(
-                username,
-                password,
+        val authentication =
+            authenticationManager.authenticate(
+                UsernamePasswordAuthenticationToken(
+                    username,
+                    password,
+                ),
             )
 
-        authenticationManager.authenticate(authToken)
+        SecurityContextHolder.getContext().authentication = authentication
+        val token: String = jwtService.generateToken(authentication)
 
-        return userService
-            .getByUsername(username)
-            .let { jwtService.generateToken(it) }
+        return token
     }
 }

@@ -1,16 +1,14 @@
 package ru.itmo.wisher.api.auth.application
 
-import io.jsonwebtoken.Claims
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.*
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
 import java.security.Key
-import java.util.*
-import java.util.function.Function
+import java.time.LocalDate
+import java.util.Map
 
 @Component
 class JwtService {
@@ -21,62 +19,52 @@ class JwtService {
     @Value("\${security.jwt.expiration-time}")
     val expirationTime: Long = 0
 
-    private val signInKey: Key
-        get() {
-            val keyBytes = Decoders.BASE64.decode(secretKey)
-            return Keys.hmacShaKeyFor(keyBytes)
-        }
-
-    fun extractUsername(token: String?): String {
-        return extractClaim(token) { obj: Claims -> obj.subject }
+    private fun key(): Key {
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey))
     }
 
-    fun <T> extractClaim(token: String?, claimsResolver: Function<Claims, T>): T {
-        val claims = extractAllClaims(token)
-        return claimsResolver.apply(claims)
-    }
+    fun generateToken(authentication: Authentication): String {
+        val username = authentication.name
+        val now = LocalDate.now()
+        val expirationDate = now.plusDays(expirationTime)
 
-    fun generateToken(userDetails: UserDetails): String {
-        return generateToken(HashMap(), userDetails)
-    }
-
-    fun generateToken(extraClaims: Map<String?, Any?>, userDetails: UserDetails): String {
-        return buildToken(extraClaims, userDetails, expirationTime)
-    }
-
-    fun isTokenValid(token: String?, userDetails: UserDetails): Boolean {
-        val username = extractUsername(token)
-        return username == userDetails.username && !isTokenExpired(token)
-    }
-
-    private fun buildToken(
-        extraClaims: Map<String?, Any?>,
-        userDetails: UserDetails,
-        expiration: Long,
-    ): String =
-        Jwts
-            .builder()
-            .setClaims(extraClaims)
-            .setSubject(userDetails.username)
-            .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + expiration))
-            .signWith(signInKey, SignatureAlgorithm.HS256)
+        return Jwts.builder()
+            .setIssuedAt(java.sql.Date.valueOf(now))
+            .setExpiration(java.sql.Date.valueOf(expirationDate))
+            .addClaims(
+                Map.ofEntries<String, Any>(
+                    Map.entry("username", username),
+                    /*Map.entry(
+                        "roles",
+                        authentication.authorities
+                            .stream()
+                            .map { role: GrantedAuthority? -> role.toString().substring(5) }
+                            .toArray(),
+                    ),*/
+                ),
+            )
+            .signWith(key(), SignatureAlgorithm.HS256)
             .compact()
-
-    private fun isTokenExpired(token: String?): Boolean {
-        return extractExpiration(token).before(Date())
     }
 
-    private fun extractExpiration(token: String?): Date {
-        return extractClaim(token) { obj: Claims -> obj.expiration }
-    }
-
-    private fun extractAllClaims(token: String?): Claims {
-        return Jwts
-            .parserBuilder()
-            .setSigningKey(signInKey)
+    fun getUsername(token: String?): String {
+        return Jwts.parserBuilder()
+            .setSigningKey(key())
             .build()
             .parseClaimsJws(token)
             .body
+            .get("username", String::class.java)
+    }
+
+    fun validateToken(token: String?): Boolean {
+        try {
+            Jwts.parserBuilder()
+                .setSigningKey(key())
+                .build()
+                .parseClaimsJws(token)
+            return true
+        } catch (e: Exception) {
+            return false
+        }
     }
 }

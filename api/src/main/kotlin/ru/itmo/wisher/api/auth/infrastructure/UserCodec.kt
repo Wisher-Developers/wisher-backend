@@ -14,7 +14,7 @@ class UserCodec(
         UserEntity(
             id = domain.id,
             username = domain.userName,
-            password = passwordEncoder.encode(domain.password),
+            password = domain.password,
             email = domain.email,
             avatar = domain.avatarLink,
         )
