@@ -1,9 +1,9 @@
-package ru.itmo.wisher.api.auth.application
+package ru.itmo.wisher.api.user.application
 
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.auth.domain.SignUpRequest
-import ru.itmo.wisher.api.auth.domain.User
+import ru.itmo.wisher.api.user.domain.User
 import java.util.*
 
 @Component
@@ -26,5 +26,9 @@ class UserService(
 
     suspend fun getByUsername(username: String): User {
         return userRepository.getByUsername(username)
+    }
+
+    fun getById(id: UUID): User {
+        return userRepository.getById(id)
     }
 }

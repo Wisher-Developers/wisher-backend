@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
 import kotlin.coroutines.CoroutineContext
 
+// пока не используем и не работает
 class SecurityCoroutineContext(
     private val securityContext: SecurityContext = SecurityContextHolder.getContext(),
 ) : ThreadContextElement<SecurityContext?> {

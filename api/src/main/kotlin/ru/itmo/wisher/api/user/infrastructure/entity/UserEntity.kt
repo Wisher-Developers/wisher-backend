@@ -1,4 +1,4 @@
-package ru.itmo.wisher.api.auth.infrastructure.entity
+package ru.itmo.wisher.api.user.infrastructure.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
