@@ -1,7 +1,7 @@
 package ru.itmo.wisher.api.example.application
 
 import org.springframework.stereotype.Component
-import ru.itmo.wisher.api.example.application.domain.PingPong
+import ru.itmo.wisher.api.example.domain.PingPong
 import java.util.UUID
 
 /**
@@ -13,7 +13,7 @@ import java.util.UUID
 class PingPongService(
     private val pingPongRepository: PingPongRepository,
 ) {
-    suspend fun get(id: UUID): PingPong = pingPongRepository.get(id)
+    fun get(id: UUID): PingPong = pingPongRepository.get(id)
 
     /**
      * Создать PingPong
@@ -22,7 +22,7 @@ class PingPongService(
      *
      * @return созданный пингпонг
      */
-    suspend fun create(value: String): PingPong {
+    fun create(value: String): PingPong {
         val pingPong =
             PingPong(
                 id = UUID.randomUUID(),

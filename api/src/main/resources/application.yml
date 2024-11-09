@@ -1,6 +1,19 @@
 spring:
   application:
     name: api
-
   liquibase:
     change-log: classpath:db/changelog/liquibase-changelog.xml
+
+
+security:
+    jwt:
+        secret-key: ${JWT_SECRET_KEY}
+        expiration-time: 604800  # = 1 неделя
+
+logging:
+    level:
+        org:
+            springframework:
+                security: DEBUG
+                web:
+                    FilterChainProxy: DEBUG

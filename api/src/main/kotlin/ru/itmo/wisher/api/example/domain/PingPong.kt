@@ -1,4 +1,4 @@
-package ru.itmo.wisher.api.example.application.domain
+package ru.itmo.wisher.api.example.domain
 
 import java.util.UUID
 

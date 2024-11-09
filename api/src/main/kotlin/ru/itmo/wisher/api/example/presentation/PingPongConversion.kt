@@ -1,6 +1,6 @@
 package ru.itmo.wisher.api.example.presentation
 
-import ru.itmo.wisher.api.example.application.domain.PingPong
+import ru.itmo.wisher.api.example.domain.PingPong
 import ru.itmo.wisher.api.example.presentation.model.PingPong as PingPongDto
 
 fun decode(dto: PingPongDto) =

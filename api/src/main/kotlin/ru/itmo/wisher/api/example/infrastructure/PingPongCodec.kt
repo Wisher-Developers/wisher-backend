@@ -1,7 +1,7 @@
 package ru.itmo.wisher.api.example.infrastructure
 
 import org.springframework.stereotype.Component
-import ru.itmo.wisher.api.example.application.domain.PingPong
+import ru.itmo.wisher.api.example.domain.PingPong
 import ru.itmo.wisher.api.example.infrastructure.entity.PingPongEntity
 
 @Component

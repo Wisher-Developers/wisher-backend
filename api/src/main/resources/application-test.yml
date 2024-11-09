@@ -1,0 +1,8 @@
+spring:
+    datasource:
+        url: jdbc:tc:postgresql:16:///test
+        username: test
+        password: test
+    liquibase:
+        enabled: true
+        change-log: classpath:db/changelog/liquibase-changelog.xml

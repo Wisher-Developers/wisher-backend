@@ -14,7 +14,7 @@ class PingController(
     private val pingPongService: PingPongService,
 ) {
     @GetMapping("{id}")
-    suspend fun get(
+    fun get(
         @PathVariable id: UUID,
     ): ResponseEntity<PingPong> {
         val pingPong =
@@ -26,7 +26,7 @@ class PingController(
     }
 
     @PostMapping
-    suspend fun create(
+    fun create(
         @RequestBody request: CreatePingPongRequest,
     ): ResponseEntity<PingPong> {
         val pingPong =
@@ -34,6 +34,6 @@ class PingController(
                 .create(request.value)
                 .let { encode(it) }
 
-        return ResponseEntity(pingPong, HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED).body(pingPong)
     }
 }
