@@ -35,7 +35,7 @@ jobs:
 
             -   name: Pull latest changes from main
                 run: |
-                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && git pull origin ci-cd-pipeline'
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && git checkout main && git pull origin main'
 
             -   name: Deploy using Docker Compose
                 run: |
