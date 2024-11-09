@@ -10,7 +10,7 @@ data class Item(
     var price: Int? = null,
     var picture: String? = null,
     var description: String? = null,
-    var wishlistId: UUID,
+    var wishlist: Wishlist,
     var position: Int,
     var idempotencyId: UUID,
 )

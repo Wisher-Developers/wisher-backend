@@ -40,7 +40,7 @@ fun Item.toResponse() =
         price = price,
         picture = picture,
         description = description,
-        wishlistId = wishlistId,
+        wishlistId = wishlist.id,
         position = position,
     )
 
