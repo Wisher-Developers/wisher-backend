@@ -10,13 +10,13 @@ security:
         secret-key: ${JWT_SECRET_KEY}
         expiration-time: 604800  # = 1 неделя
 
-logging:
-    level:
-        org:
-            springframework:
-                security: DEBUG
-                web:
-                    FilterChainProxy: DEBUG
+#logging:
+#    level:
+#        org:
+#            springframework:
+#                security: DEBUG
+#                web:
+#                    FilterChainProxy: DEBUG
 
 s3-storage:
     host: https://storage.yandexcloud.net

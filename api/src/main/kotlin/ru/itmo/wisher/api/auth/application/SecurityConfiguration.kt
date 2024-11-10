@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -14,15 +15,12 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.CorsConfigurationSource
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import ru.itmo.wisher.api.user.application.UserRepository
 import ru.itmo.wisher.api.user.domain.exception.NoSuchUsername
 
 @Configuration
+@EnableMethodSecurity
 @EnableWebSecurity(debug = true)
 class SecurityConfiguration : WebMvcConfigurer {
 
@@ -60,10 +58,14 @@ class SecurityConfiguration : WebMvcConfigurer {
         authenticationProvider: AuthenticationProvider,
     ): SecurityFilterChain {
         http
+            .cors { it.disable() }
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it.requestMatchers("/api/auth/**").permitAll()
                 it.requestMatchers("/api/users/{id}").permitAll()
+                it.requestMatchers("/api/item/{id}").permitAll()
+                it.requestMatchers("/api/wishlist/{id}").permitAll()
+                it.requestMatchers("/api/wishlist/user/{id}").permitAll()
                 it.requestMatchers("/error").permitAll()
                 it.anyRequest().authenticated()
             }
@@ -78,24 +80,5 @@ class SecurityConfiguration : WebMvcConfigurer {
             )
 
         return http.build()
-    }
-
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-        configuration.allowedOriginPatterns = listOf("/**")
-        configuration.allowedMethods = listOf("*")
-        configuration.allowedHeaders = listOf("*")
-        configuration.allowCredentials = true
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
-    }
-
-    override fun addCorsMappings(registry: CorsRegistry) {
-        registry
-            .addMapping("/**")
-            .allowedMethods("*")
-            .allowedMethods("*")
     }
 }
