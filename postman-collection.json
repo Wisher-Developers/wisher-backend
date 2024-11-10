@@ -1,0 +1,478 @@
+{
+	"info": {
+		"_postman_id": "cf804527-be8b-45cc-8323-06b29eac04e0",
+		"name": "Wisher API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39422689"
+	},
+	"item": [
+		{
+			"name": "Создать пинг",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzExOTMxNzIsImV4cCI6MTczMTc5Nzk3MiwidXNlcm5hbWUiOiJBYm9iIn0.9kE-dXeP-g2SYlH6kT3TcccKifF8rolsLYaVEDGk_Vk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"value\": \"popaaae\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:8080/api/ping",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить пинг по id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:8080/api/ping/dc3d104c-4b50-459b-b356-8a70a2f63e05",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ping",
+						"dc3d104c-4b50-459b-b356-8a70a2f63e05"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"11\",\r\n    \"password\": \"123\",\r\n    \"email\": \"q11@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:8080/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"11\",\r\n    \"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wishlist/create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzExOTc5MDcsImV4cCI6MTczMTgwMjcwNywidXNlcm5hbWUiOiIxMSJ9.gn3h0I27hCK5XPjELAAqU7Lz5319cg9SBQEQ6vImGIk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"wwwww\",\r\n    \"description\": \"121233\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:8080/api/wishlist/create",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"wishlist",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get wishlist",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzExOTY0OTcsImV4cCI6MTczMTgwMTI5NywidXNlcm5hbWUiOiIxIn0.rXoIiJR1Z3lcrdbrVj1JEpZT0BXyWDebibD8xuggjBg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}:8080/api/wishlist/4d2d231f-2dee-46fc-b64e-defad24a69d4",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"wishlist",
+						"4d2d231f-2dee-46fc-b64e-defad24a69d4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get wishlist/user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzExOTY0OTcsImV4cCI6MTczMTgwMTI5NywidXNlcm5hbWUiOiIxIn0.rXoIiJR1Z3lcrdbrVj1JEpZT0BXyWDebibD8xuggjBg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}:8080/api/wishlist/user/4139e075-591d-4a12-bc83-01c98ed95fe5",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"wishlist",
+						"user",
+						"4139e075-591d-4a12-bc83-01c98ed95fe5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "item/create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzExOTY0OTcsImV4cCI6MTczMTgwMTI5NywidXNlcm5hbWUiOiIxIn0.rXoIiJR1Z3lcrdbrVj1JEpZT0BXyWDebibD8xuggjBg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"wwwww\",\r\n    \"description\": \"121233\",\r\n    \"link\": \"qweqe\",\r\n    \"price\": 121233,\r\n    \"picture\": \"121233\",\r\n    \"priority\": 4,\r\n    \"wishlistId\": \"4d2d231f-2dee-46fc-b64e-defad24a69d4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:8080/api/item/create",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"item",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "item/copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzExOTY0OTcsImV4cCI6MTczMTgwMTI5NywidXNlcm5hbWUiOiIxIn0.rXoIiJR1Z3lcrdbrVj1JEpZT0BXyWDebibD8xuggjBg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"oldId\": \"b86699df-46ab-452c-a47a-001f80368612\",\r\n    \"name\": \"wwwww\",\r\n    \"description\": \"121233\",\r\n    \"price\": 1233,\r\n    \"picture\": \"121233\",\r\n    \"priority\": 2,\r\n    \"wishlistId\": \"19f96b9b-a41c-4038-86d9-772f480b27f7\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:8080/api/item/copy",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"item",
+						"copy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get item",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzExOTY0OTcsImV4cCI6MTczMTgwMTI5NywidXNlcm5hbWUiOiIxIn0.rXoIiJR1Z3lcrdbrVj1JEpZT0BXyWDebibD8xuggjBg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:8080/api/item/b86699df-46ab-452c-a47a-001f80368612",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"item",
+						"b86699df-46ab-452c-a47a-001f80368612"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "item/delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzExOTY0OTcsImV4cCI6MTczMTgwMTI5NywidXNlcm5hbWUiOiIxIn0.rXoIiJR1Z3lcrdbrVj1JEpZT0BXyWDebibD8xuggjBg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:8080/api/item/delete/c67d4627-2078-41d6-9fde-c4e6347bf662",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"item",
+						"delete",
+						"c67d4627-2078-41d6-9fde-c4e6347bf662"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wishlist/delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzExOTY0OTcsImV4cCI6MTczMTgwMTI5NywidXNlcm5hbWUiOiIxIn0.rXoIiJR1Z3lcrdbrVj1JEpZT0BXyWDebibD8xuggjBg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:8080/api/wishlist/delete/4d2d231f-2dee-46fc-b64e-defad24a69d4",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"wishlist",
+						"delete",
+						"4d2d231f-2dee-46fc-b64e-defad24a69d4"
+					]
+				}
+			},
+			"response": []
+		},
+        {
+            "name": "Я",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzExODYzMjQsImV4cCI6MTczMTc5MTEyNCwidXNlcm5hbWUiOiIyMTUifQ.bTarKjdnsDbBPB86l2jUDXvDCOul1P3x96hqHK2C7tI",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://{{host}}/api/users/me",
+                    "protocol": "http",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "api",
+                        "users",
+                        "me"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Получить юзера по ID",
+            "request": {
+                "auth": {
+                    "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://{{host}}/api/users/594f5a98-3cac-4216-beb8-0785043ab134",
+                    "protocol": "http",
+                    "host": [
+                        "{{host}}"
+                    ],
+                    "path": [
+                        "api",
+                        "users",
+                        "594f5a98-3cac-4216-beb8-0785043ab134"
+                    ]
+                }
+            },
+            "response": []
+        }
+	]
+}

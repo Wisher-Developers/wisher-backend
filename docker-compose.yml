@@ -24,8 +24,8 @@ services:
             POSTGRES_PASSWORD: ${WISHER_DB_PASSWORD}
         ports:
             - "5432:5432"
-        volumes:
-            - db_data:/var/lib/postgresql/data
+#        volumes:
+#            - db_data:/var/lib/postgresql/data
 
 #    kafka:
 #        image: wurstmeister/kafka:latest
@@ -43,5 +43,5 @@ services:
 #        ports:
 #            - "2181:2181"
 
-volumes:
-    db_data:
+#volumes:
+#    db_data:
