@@ -5,7 +5,7 @@ RUN yum update -y && yum install -y dos2unix
 COPY api .
 RUN dos2unix gradlew
 RUN chmod +x gradlew
-RUN ./gradlew build
+RUN ./gradlew build --info
 
 FROM amazoncorretto:21
 VOLUME /tmp
