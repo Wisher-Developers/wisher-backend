@@ -32,7 +32,7 @@ class ItemEntity(
     @Column(name = "description")
     var description: String? = null,
     @Column(name = "wishlist_id")
-    var wishlistId: UUID,
+    val wishlistId: UUID,
     @Column(name = "position")
     var position: Int,
     @Column(name = "idempotency_id")

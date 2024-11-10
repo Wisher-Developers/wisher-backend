@@ -1,7 +1,5 @@
 package ru.itmo.wisher.api.wishes.infrastructure
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.wishes.domain.Item

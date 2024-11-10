@@ -2,7 +2,14 @@ package ru.itmo.wisher.api.wishes.presentation
 
 import ru.itmo.wisher.api.wishes.domain.CopyItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateItemRequest
+import ru.itmo.wisher.api.wishes.domain.CreateWishlistRequest
 import ru.itmo.wisher.api.wishes.domain.Item
+import ru.itmo.wisher.api.wishes.domain.Wishlist
+import ru.itmo.wisher.api.wishes.presentation.model.CopyItemRequestDto
+import ru.itmo.wisher.api.wishes.presentation.model.CreateItemRequestDto
+import ru.itmo.wisher.api.wishes.presentation.model.CreateWishlistRequestDto
+import ru.itmo.wisher.api.wishes.presentation.model.ItemResponse
+import ru.itmo.wisher.api.wishes.presentation.model.WishlistResponse
 
 fun CreateItemRequestDto.toDomain() =
     CreateItemRequest(
@@ -13,7 +20,6 @@ fun CreateItemRequestDto.toDomain() =
         picture = picture,
         description = description,
         wishlistId = wishlistId,
-        position = position,
     )
 
 fun CopyItemRequestDto.toDomain() =
@@ -26,7 +32,6 @@ fun CopyItemRequestDto.toDomain() =
         picture = picture,
         description = description,
         wishlistId = wishlistId,
-        position = position,
     )
 
 fun Item.toResponse() =
@@ -40,4 +45,24 @@ fun Item.toResponse() =
         description = description,
         wishlistId = wishlistId,
         position = position,
+    )
+
+fun CreateWishlistRequestDto.toDomain() =
+    CreateWishlistRequest(
+        name = name,
+        description = description,
+        accessLink = accessLink,
+        privateMode = privateMode,
+    )
+
+fun Wishlist.toResponse() =
+    WishlistResponse(
+        id = id,
+        name = name,
+        description = description,
+        accessLink = accessLink,
+        privateMode = privateMode,
+        position = position,
+        ownerId = ownerId,
+        items = items.map { it.toResponse() },
     )

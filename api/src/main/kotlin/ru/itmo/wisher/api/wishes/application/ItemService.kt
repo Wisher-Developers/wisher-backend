@@ -9,6 +9,7 @@ import java.util.UUID
 @Component
 class ItemService(
     private val itemRepository: ItemRepository,
+    private val wishlistRepository: WishlistRepository,
 ) {
 
     fun create(request: CreateItemRequest) {
@@ -22,7 +23,7 @@ class ItemService(
                 picture = request.picture,
                 description = request.description,
                 wishlistId = request.wishlistId,
-                position = request.position,
+                position = wishlistRepository.getById(request.wishlistId).items.size + 1,
                 idempotencyId = UUID.randomUUID(),
             )
 
@@ -41,7 +42,7 @@ class ItemService(
                 picture = request.picture,
                 description = request.description,
                 wishlistId = request.wishlistId,
-                position = request.position,
+                position = wishlistRepository.getById(request.wishlistId).items.size + 1,
                 idempotencyId = oldItem.idempotencyId,
             )
 
