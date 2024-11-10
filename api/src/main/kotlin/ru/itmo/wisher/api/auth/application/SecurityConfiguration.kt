@@ -66,6 +66,7 @@ class SecurityConfiguration : WebMvcConfigurer {
                 it.requestMatchers("/api/item/{id}").permitAll()
                 it.requestMatchers("/api/wishlist/{id}").permitAll()
                 it.requestMatchers("/api/wishlist/user/{id}").permitAll()
+                it.requestMatchers("/error").permitAll()
                 it.anyRequest().authenticated()
             }
             .sessionManagement {

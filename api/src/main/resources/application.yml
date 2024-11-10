@@ -17,3 +17,8 @@ security:
 #                security: DEBUG
 #                web:
 #                    FilterChainProxy: DEBUG
+
+s3-storage:
+    host: https://storage.yandexcloud.net
+    access-id: ${S3_ID}
+    secret-key: ${S3_KEY}
