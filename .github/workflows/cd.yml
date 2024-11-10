@@ -3,7 +3,7 @@ name: Deploy to Remote Machine
 on:
     push:
         branches:
-            - main
+            - fix-cors-and-security
 
 jobs:
     deploy:
@@ -32,9 +32,9 @@ jobs:
                 run: |
                     ssh-keyscan -H ${{ secrets.VDSINA_MACHINE_ADDRESS }} >> ~/.ssh/known_hosts        
 
-            -   name: Pull latest changes from main
+            -   name: Pull latest changes from fix-cors-and-security
                 run: |
-                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && git checkout main && git pull origin main'
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && git checkout fix-cors-and-security && git pull origin fix-cors-and-security'
 
             -   name: Clean up machine
                 run: |
@@ -42,7 +42,7 @@ jobs:
 
             -   name: Deploy using Docker Compose
                 run: |
-                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose build --rm && docker-compose up -d'
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose build --rm --no-cache && docker-compose up -d'
 
             -   name: Remove temporary containers
                 run: |
