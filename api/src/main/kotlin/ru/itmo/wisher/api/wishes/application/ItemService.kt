@@ -1,9 +1,11 @@
 package ru.itmo.wisher.api.wishes.application
 
 import org.springframework.stereotype.Component
+import ru.itmo.wisher.api.user.domain.User
 import ru.itmo.wisher.api.wishes.domain.CopyItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateItemRequest
 import ru.itmo.wisher.api.wishes.domain.Item
+import ru.itmo.wisher.api.wishes.domain.exception.UserIsNotOwnerException
 import java.util.UUID
 
 @Component
@@ -13,6 +15,11 @@ class ItemService(
 ) {
 
     fun create(request: CreateItemRequest) {
+        val wishlist = wishlistRepository.getById(request.wishlistId)
+        if (User.current().id != wishlist.ownerId) {
+            throw UserIsNotOwnerException(wishlist.id)
+        }
+
         val item =
             Item(
                 id = UUID.randomUUID(),
@@ -23,7 +30,7 @@ class ItemService(
                 picture = request.picture,
                 description = request.description,
                 wishlistId = request.wishlistId,
-                position = wishlistRepository.getById(request.wishlistId).items.size + 1,
+                position = wishlist.items.size + 1,
                 idempotencyId = UUID.randomUUID(),
             )
 
@@ -31,6 +38,11 @@ class ItemService(
     }
 
     fun copy(request: CopyItemRequest) {
+        val wishlist = wishlistRepository.getById(request.wishlistId)
+        if (User.current().id != wishlist.ownerId) {
+            throw UserIsNotOwnerException(wishlist.id)
+        }
+
         val oldItem = getById(request.oldId)
         val item =
             Item(
@@ -42,7 +54,7 @@ class ItemService(
                 picture = request.picture,
                 description = request.description,
                 wishlistId = request.wishlistId,
-                position = wishlistRepository.getById(request.wishlistId).items.size + 1,
+                position = wishlist.items.size + 1,
                 idempotencyId = oldItem.idempotencyId,
             )
 
