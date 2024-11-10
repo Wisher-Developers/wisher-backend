@@ -24,6 +24,12 @@ class ItemRepository(
             ?.let { itemCodec.decode(it) }
     }
 
+    override fun findByWishlistId(id: UUID): List<Item> {
+        return itemJpaRepository
+            .findByWishlistId(id)
+            .map { itemCodec.decode(it) }
+    }
+
     override fun deleteById(id: UUID) {
         itemJpaRepository.deleteById(id)
     }

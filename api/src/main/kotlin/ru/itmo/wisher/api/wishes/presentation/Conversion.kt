@@ -59,7 +59,7 @@ fun CreateWishlistRequestDto.toDomain() =
 
 fun UpdateWishlistRequestDto.toDomain() =
     UpdateWishlistRequest(
-        id =  id,
+        id = id,
         name = name,
         description = description,
         privateMode = privateMode,

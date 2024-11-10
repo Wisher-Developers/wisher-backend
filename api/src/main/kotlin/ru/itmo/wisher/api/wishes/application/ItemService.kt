@@ -50,6 +50,13 @@ class ItemService(
     }
 
     fun delete(id: UUID) {
+        val item = itemRepository.getById(id)
+        val items = itemRepository.findByWishlistId(item.wishlistId)
+        items.filter { it.position > item.position }
+            .map {
+                it.position -= 1
+                itemRepository.save(it)
+            }
         itemRepository.deleteById(id)
     }
 

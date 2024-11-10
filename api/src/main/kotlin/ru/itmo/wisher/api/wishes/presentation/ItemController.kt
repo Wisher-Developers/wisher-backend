@@ -35,7 +35,7 @@ class ItemController(
         return ResponseEntity.noContent().build()
     }
 
-    @PostMapping("delete")
+    @PostMapping("delete/{id}")
     fun delete(
         @PathVariable id: UUID,
     ): ResponseEntity<Void> {

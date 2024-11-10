@@ -40,7 +40,7 @@ class WishlistController(
         return ResponseEntity.ok(wishlistService.getByOwnerId(id).map { it.toResponse() })
     }
 
-    @PostMapping("delete")
+    @PostMapping("delete/{id}")
     fun delete(
         @PathVariable id: UUID,
     ): ResponseEntity<Void> {

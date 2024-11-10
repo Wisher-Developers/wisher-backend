@@ -39,6 +39,14 @@ class WishlistService(
 
     fun delete(id: UUID) {
         getById(id).items.forEach { itemRepository.deleteById(it.id) }
+
+        val wishlist = wishlistRepository.getById(id)
+        val wishlists = wishlistRepository.findByOwnerId(wishlist.ownerId)
+        wishlists.filter { it.position > wishlist.position }
+            .map {
+                it.position -= 1
+                wishlistRepository.save(it)
+            }
         wishlistRepository.deleteById(id)
     }
 
