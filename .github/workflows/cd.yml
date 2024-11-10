@@ -42,7 +42,7 @@ jobs:
 
             -   name: Build Docker images
                 run: |
-                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose build --rm'
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose build --force-rm'
 
             -   name: Deploy using Docker Compose
                 run: |
