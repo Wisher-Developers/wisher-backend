@@ -4,11 +4,13 @@ import ru.itmo.wisher.api.wishes.domain.CopyItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateWishlistRequest
 import ru.itmo.wisher.api.wishes.domain.Item
+import ru.itmo.wisher.api.wishes.domain.UpdateWishlistRequest
 import ru.itmo.wisher.api.wishes.domain.Wishlist
 import ru.itmo.wisher.api.wishes.presentation.model.CopyItemRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.CreateItemRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.CreateWishlistRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.ItemResponse
+import ru.itmo.wisher.api.wishes.presentation.model.UpdateWishlistRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.WishlistResponse
 
 fun CreateItemRequestDto.toDomain() =
@@ -52,6 +54,14 @@ fun CreateWishlistRequestDto.toDomain() =
         name = name,
         description = description,
         accessLink = accessLink,
+        privateMode = privateMode,
+    )
+
+fun UpdateWishlistRequestDto.toDomain() =
+    UpdateWishlistRequest(
+        id =  id,
+        name = name,
+        description = description,
         privateMode = privateMode,
     )
 

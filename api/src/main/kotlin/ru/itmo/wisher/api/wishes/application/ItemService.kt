@@ -49,6 +49,10 @@ class ItemService(
         itemRepository.save(item)
     }
 
+    fun delete(id: UUID) {
+        itemRepository.deleteById(id)
+    }
+
     fun getById(id: UUID): Item {
         return itemRepository.getById(id)
     }

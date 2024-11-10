@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.itmo.wisher.api.wishes.application.WishlistService
 import ru.itmo.wisher.api.wishes.presentation.model.CreateWishlistRequestDto
+import ru.itmo.wisher.api.wishes.presentation.model.UpdateWishlistRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.WishlistResponse
 import java.util.UUID
 
@@ -37,5 +38,20 @@ class WishlistController(
         @PathVariable id: UUID,
     ): ResponseEntity<List<WishlistResponse>> {
         return ResponseEntity.ok(wishlistService.getByOwnerId(id).map { it.toResponse() })
+    }
+
+    @PostMapping("delete")
+    fun delete(
+        @PathVariable id: UUID,
+    ): ResponseEntity<Void> {
+        wishlistService.delete(id)
+        return ResponseEntity.noContent().build()
+    }
+
+    @PostMapping("update")
+    fun update(
+        @RequestBody request: UpdateWishlistRequestDto,
+    ): ResponseEntity<WishlistResponse> {
+        return ResponseEntity.ok(wishlistService.update(request.toDomain()).toResponse())
     }
 }

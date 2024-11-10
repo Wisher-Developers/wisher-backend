@@ -23,4 +23,8 @@ class ItemRepository(
             .findByIdOrNull(id)
             ?.let { itemCodec.decode(it) }
     }
+
+    override fun deleteById(id: UUID) {
+        itemJpaRepository.deleteById(id)
+    }
 }

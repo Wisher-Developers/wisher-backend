@@ -29,4 +29,8 @@ class WishlistRepository(
             .findByOwnerId(id)
             .let { it.map { w -> wishlistCodec.decode(w) } }
     }
+
+    override fun deleteById(id: UUID) {
+        wishlistJpaRepository.deleteById(id)
+    }
 }

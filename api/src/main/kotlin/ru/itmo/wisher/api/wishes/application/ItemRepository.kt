@@ -8,6 +8,8 @@ interface ItemRepository {
 
     fun save(item: Item): Item
 
+    fun deleteById(id: UUID)
+
     fun findById(id: UUID): Item?
 
     fun getById(id: UUID): Item {

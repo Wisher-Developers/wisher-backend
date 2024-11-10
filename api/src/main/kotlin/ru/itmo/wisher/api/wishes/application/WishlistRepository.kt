@@ -10,6 +10,8 @@ interface WishlistRepository {
 
     fun findById(id: UUID): Wishlist?
 
+    fun deleteById(id: UUID)
+
     fun findByOwnerId(id: UUID): List<Wishlist>
 
     fun getById(id: UUID): Wishlist {
