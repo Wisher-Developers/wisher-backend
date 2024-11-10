@@ -4,7 +4,7 @@ on:
     push:
         branches:
             - main
-            - ci-cd-pipeline
+            - fix-cors-and-security
 
 jobs:
     deploy:
