@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import ru.itmo.wisher.api.image.application.ImageService
+import ru.itmo.wisher.api.image.presentation.model.UploadImageResponse
 
 @RestController
 @RequestMapping("api/image")
@@ -16,7 +17,10 @@ class ImageController(
     @PostMapping
     fun upload(
         @RequestParam("file") file: MultipartFile,
-    ): ResponseEntity<String> {
-        return ResponseEntity.ok(imageService.uploadImage(file.bytes).toString())
+    ): ResponseEntity<UploadImageResponse> {
+        val url = imageService.uploadImage(file.bytes)
+        val response = UploadImageResponse(url.toString())
+
+        return ResponseEntity.ok(response)
     }
 }

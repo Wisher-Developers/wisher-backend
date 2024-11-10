@@ -14,18 +14,24 @@ class S3Storage(
 ) : ImageRepository {
     override fun uploadImage(image: ByteArray): URI {
         val imgName = UUID.randomUUID().toString()
-            this.s3Client.putObject(
-                PutObjectRequest.builder()
+        s3Client.putObject(
+            PutObjectRequest.builder()
+                .bucket(defaultBucket)
+                .key(
+                    imgName,
+                ) // TODO проверка на уникальность, иначе есть вер перезатирания
+                .build(),
+            RequestBody.fromBytes(image),
+        )
+
+        return s3Client
+            .utilities()
+            .getUrl(
+                GetUrlRequest
+                    .builder()
                     .bucket(defaultBucket)
-                    .key(
-                        imgName,
-                    ) // TODO проверка на уникальность, иначе есть вер перезатирания
+                    .key(imgName)
                     .build(),
-                RequestBody.fromBytes(image),
-            )
-        return s3Client.utilities().getUrl(GetUrlRequest.builder()
-            .bucket(defaultBucket)
-            .key(imgName)
-            .build()).toURI()
+            ).toURI()
     }
 }
