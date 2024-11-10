@@ -14,7 +14,9 @@ import java.util.UUID
 interface ItemJpaRepository : CrudRepository<ItemEntity, UUID> {
     fun findByWishlistId(wishlistId: UUID): List<ItemEntity>
 
-    @Query("SELECT i FROM Item i, Wishlist w WHERE w.id=i.wishlist_id AND w.owner_id<>?1")
+    @Query(
+        "SELECT i FROM ItemEntity i, WishlistEntity w WHERE w.id=i.wishlistId AND w.owner.id<>?1",
+    )
     fun getRecommendations(id: UUID, limit: Limit): List<ItemEntity>
 }
 
