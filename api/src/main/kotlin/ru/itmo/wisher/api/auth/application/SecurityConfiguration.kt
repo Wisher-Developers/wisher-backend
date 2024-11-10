@@ -21,7 +21,7 @@ import ru.itmo.wisher.api.user.domain.exception.NoSuchUsername
 
 @Configuration
 @EnableMethodSecurity
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 class SecurityConfiguration : WebMvcConfigurer {
 
     @Bean
