@@ -11,7 +11,7 @@ class WishlistService(
     private val wishlistRepository: WishlistRepository,
 ) {
 
-    fun create(request: CreateWishlistRequest) {
+    fun create(request: CreateWishlistRequest): Wishlist {
         val user = User.current()
         val wishlist =
             Wishlist(
@@ -24,7 +24,7 @@ class WishlistService(
                 items = mutableListOf(),
             )
 
-        wishlistRepository.save(wishlist)
+        return wishlistRepository.save(wishlist)
     }
 
     fun getByOwnerId(id: UUID): List<Wishlist> {

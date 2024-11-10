@@ -11,4 +11,5 @@ data class WishlistResponse(
     val privateMode: PrivateMode,
     val position: Int,
     val ownerId: UUID,
+    val items: List<ItemResponse>,
 )

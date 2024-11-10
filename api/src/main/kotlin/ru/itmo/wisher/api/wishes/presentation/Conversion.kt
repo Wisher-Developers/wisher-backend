@@ -20,7 +20,6 @@ fun CreateItemRequestDto.toDomain() =
         picture = picture,
         description = description,
         wishlistId = wishlistId,
-        position = position,
     )
 
 fun CopyItemRequestDto.toDomain() =
@@ -33,7 +32,6 @@ fun CopyItemRequestDto.toDomain() =
         picture = picture,
         description = description,
         wishlistId = wishlistId,
-        position = position,
     )
 
 fun Item.toResponse() =
@@ -66,4 +64,5 @@ fun Wishlist.toResponse() =
         privateMode = privateMode,
         position = position,
         ownerId = ownerId,
+        items = items.map { it.toResponse() },
     )

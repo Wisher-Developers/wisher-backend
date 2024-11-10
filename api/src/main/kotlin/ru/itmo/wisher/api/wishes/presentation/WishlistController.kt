@@ -21,9 +21,8 @@ class WishlistController(
     @PostMapping("create")
     fun create(
         @RequestBody request: CreateWishlistRequestDto,
-    ): ResponseEntity<Void> {
-        wishlistService.create(request.toDomain())
-        return ResponseEntity.noContent().build()
+    ): ResponseEntity<WishlistResponse> {
+        return ResponseEntity.ok(wishlistService.create(request.toDomain()).toResponse())
     }
 
     @GetMapping("{id}")

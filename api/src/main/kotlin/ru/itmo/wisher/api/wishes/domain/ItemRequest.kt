@@ -10,7 +10,6 @@ data class CreateItemRequest(
     var picture: String? = null,
     var description: String? = null,
     var wishlistId: UUID,
-    var position: Int,
 )
 
 data class CopyItemRequest(
@@ -22,5 +21,4 @@ data class CopyItemRequest(
     var picture: String? = null,
     var description: String? = null,
     var wishlistId: UUID,
-    var position: Int,
 )
