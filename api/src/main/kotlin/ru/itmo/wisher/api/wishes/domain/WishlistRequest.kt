@@ -5,7 +5,6 @@ import java.util.UUID
 data class CreateWishlistRequest(
     var name: String,
     var description: String? = null,
-    var accessLink: String? = null,
     var privateMode: PrivateMode = PrivateMode.PUBLIC,
 )
 

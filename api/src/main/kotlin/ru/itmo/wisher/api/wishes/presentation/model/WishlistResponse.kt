@@ -2,6 +2,7 @@ package ru.itmo.wisher.api.wishes.presentation.model
 
 import ru.itmo.wisher.api.wishes.domain.PrivateMode
 import java.util.UUID
+import ru.itmo.wisher.api.user.presentation.model.User as UserDto
 
 data class WishlistResponse(
     val id: UUID,
@@ -10,6 +11,6 @@ data class WishlistResponse(
     val accessLink: String?,
     val privateMode: PrivateMode,
     val position: Int,
-    val ownerId: UUID,
+    val owner: UserDto,
     val items: List<ItemResponse>,
 )

@@ -16,7 +16,7 @@ class ItemService(
 
     fun create(request: CreateItemRequest) {
         val wishlist = wishlistRepository.getById(request.wishlistId)
-        if (User.current().id != wishlist.ownerId) {
+        if (User.current().id != wishlist.owner.id) {
             throw UserIsNotOwnerException(wishlist.id)
         }
 
@@ -39,7 +39,7 @@ class ItemService(
 
     fun copy(request: CopyItemRequest) {
         val wishlist = wishlistRepository.getById(request.wishlistId)
-        if (User.current().id != wishlist.ownerId) {
+        if (User.current().id != wishlist.owner.id) {
             throw UserIsNotOwnerException(wishlist.id)
         }
 

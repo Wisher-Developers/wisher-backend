@@ -20,7 +20,7 @@ class WishlistService(
                 id = UUID.randomUUID(),
                 name = request.name,
                 description = request.description,
-                ownerId = user.id,
+                owner = user,
                 privateMode = request.privateMode,
                 position = getByOwnerId(user.id).size + 1,
                 items = mutableListOf(),
@@ -41,7 +41,7 @@ class WishlistService(
         getById(id).items.forEach { itemRepository.deleteById(it.id) }
 
         val wishlist = wishlistRepository.getById(id)
-        val wishlists = wishlistRepository.findByOwnerId(wishlist.ownerId)
+        val wishlists = wishlistRepository.findByOwnerId(wishlist.owner.id)
         wishlists.filter { it.position > wishlist.position }
             .map {
                 it.position -= 1

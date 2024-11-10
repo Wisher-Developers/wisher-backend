@@ -1,5 +1,6 @@
 package ru.itmo.wisher.api.wishes.presentation
 
+import ru.itmo.wisher.api.user.presentation.conversion.toDto
 import ru.itmo.wisher.api.wishes.domain.CopyItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateWishlistRequest
@@ -53,7 +54,6 @@ fun CreateWishlistRequestDto.toDomain() =
     CreateWishlistRequest(
         name = name,
         description = description,
-        accessLink = accessLink,
         privateMode = privateMode,
     )
 
@@ -73,6 +73,6 @@ fun Wishlist.toResponse() =
         accessLink = accessLink,
         privateMode = privateMode,
         position = position,
-        ownerId = ownerId,
+        owner = owner.toDto(),
         items = items.map { it.toResponse() },
     )

@@ -1,12 +1,14 @@
 package ru.itmo.wisher.api.wishes.infrastructure
 
 import org.springframework.stereotype.Component
+import ru.itmo.wisher.api.user.infrastructure.UserCodec
 import ru.itmo.wisher.api.wishes.domain.Wishlist
 import ru.itmo.wisher.api.wishes.infrastructure.entity.WishlistEntity
 
 @Component
 class WishlistCodec(
     private val itemCodec: ItemCodec,
+    private val userCodec: UserCodec,
 ) {
 
     fun encode(domain: Wishlist) =
@@ -17,7 +19,7 @@ class WishlistCodec(
             accessLink = domain.accessLink,
             privateMode = domain.privateMode,
             position = domain.position,
-            ownerId = domain.ownerId,
+            owner = userCodec.encode(domain.owner),
             items = domain.items.map { itemCodec.encode(it) }.toMutableList(),
         )
 
@@ -29,7 +31,7 @@ class WishlistCodec(
             accessLink = entity.accessLink,
             privateMode = entity.privateMode,
             position = entity.position,
-            ownerId = entity.ownerId,
+            owner = userCodec.decode(entity.owner),
             items = entity.items.map { itemCodec.decode(it) }.toMutableList(),
         )
 }
