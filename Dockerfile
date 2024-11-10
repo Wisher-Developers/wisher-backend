@@ -1,11 +1,11 @@
 FROM amazoncorretto:21 AS builder
 WORKDIR /app
 
-COPY api .
-
 RUN yum update -y && yum install -y dos2unix
+COPY api .
 RUN dos2unix gradlew
-RUN chmod +x gradlew && ./gradlew clean build --info --no-daemon --parallel --build-cache --configure-on-demand
+RUN chmod +x gradlew
+RUN ./gradlew build --info
 
 FROM amazoncorretto:21
 VOLUME /tmp

@@ -40,10 +40,10 @@ jobs:
                 run: |
                     ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose down && docker container prune -f && if [ -n "$(docker images -q --filter "dangling=true")" ]; then docker images -q --filter "dangling=true" | xargs docker rmi; fi'
 
+            -   name: Build Docker images
+                run: |
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose build --force-rm'
+
             -   name: Deploy using Docker Compose
                 run: |
-                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose build --rm && docker-compose up -d'
-
-            -   name: Remove temporary containers
-                run: |
-                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'docker container prune -f'
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose up -d'
