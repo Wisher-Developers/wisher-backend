@@ -6,6 +6,7 @@ import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
+import ru.itmo.wisher.api.user.domain.User
 import java.security.Key
 import java.time.Instant
 import java.util.*
@@ -20,7 +21,7 @@ class JwtService {
     val expirationTime: Long = 0
 
     fun generateToken(authentication: Authentication): String {
-        val username = authentication.name
+        val user = authentication.principal as User
 
         val issuedAt = Instant.now()
         val expiresAt = issuedAt.plusSeconds(expirationTime)
@@ -29,7 +30,10 @@ class JwtService {
             .setIssuedAt(Date.from(issuedAt))
             .setExpiration(Date.from(expiresAt))
             .addClaims(
-                mapOf("username" to username),
+                mapOf(
+                    "userId" to user.id,
+                    "username" to user.username,
+                ),
             )
             .signWith(key(), SignatureAlgorithm.HS256)
             .compact()
