@@ -35,8 +35,12 @@ jobs:
 
             -   name: Pull latest changes from main
                 run: |
-                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && git checkout main && git pull origin main'
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && git checkout fix-cors-and-security && git pull origin fix-cors-and-security'
+
+            -   name: Clean up machine
+                run: |
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose down && docker rm $(docker ps -a -q) && docker images -q --filter "dangling=true" | xargs docker rmi'
 
             -   name: Deploy using Docker Compose
                 run: |
-                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose down && docker-compose build && docker-compose up -d'
+                    ssh ${{ secrets.VDSINA_MACHINE_USER }}@${{ secrets.VDSINA_MACHINE_ADDRESS }} 'cd /home/wisher-backend && docker-compose build && docker-compose up -d'
