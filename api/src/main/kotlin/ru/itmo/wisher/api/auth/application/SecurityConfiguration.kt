@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -22,6 +23,7 @@ import ru.itmo.wisher.api.user.application.UserRepository
 import ru.itmo.wisher.api.user.domain.exception.NoSuchUsername
 
 @Configuration
+@EnableMethodSecurity
 @EnableWebSecurity(debug = true)
 class SecurityConfiguration : WebMvcConfigurer {
 
@@ -61,16 +63,7 @@ class SecurityConfiguration : WebMvcConfigurer {
 
 
         http
-            .cors {
-                it.configurationSource {
-                    CorsConfiguration().apply {
-                        allowedOriginPatterns = listOf("/**")
-                        allowedMethods = listOf("*")
-                        allowedHeaders = listOf("*")
-                        allowCredentials = true
-                    }
-                }
-            }
+            .cors { it.disable() }
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it.requestMatchers("/api/auth/**").permitAll()
