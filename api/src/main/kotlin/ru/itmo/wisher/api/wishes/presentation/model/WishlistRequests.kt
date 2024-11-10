@@ -4,15 +4,14 @@ import ru.itmo.wisher.api.wishes.domain.PrivateMode
 import java.util.UUID
 
 data class CreateWishlistRequestDto(
-    var name: String,
-    var description: String? = null,
-    var accessLink: String? = null,
-    var privateMode: PrivateMode = PrivateMode.PUBLIC,
+    val name: String,
+    val description: String? = null,
+    val privateMode: PrivateMode = PrivateMode.PUBLIC,
 )
 
 data class UpdateWishlistRequestDto(
-    var id: UUID,
-    var name: String? = null,
-    var description: String? = null,
-    var privateMode: PrivateMode? = null,
+    val id: UUID,
+    val name: String? = null,
+    val description: String? = null,
+    val privateMode: PrivateMode? = null,
 )

@@ -3,12 +3,14 @@ package ru.itmo.wisher.api.wishes.application
 import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.user.domain.User
 import ru.itmo.wisher.api.wishes.domain.CreateWishlistRequest
+import ru.itmo.wisher.api.wishes.domain.UpdateWishlistRequest
 import ru.itmo.wisher.api.wishes.domain.Wishlist
 import java.util.UUID
 
 @Component
 class WishlistService(
     private val wishlistRepository: WishlistRepository,
+    private val itemRepository: WishlistRepository,
 ) {
 
     fun create(request: CreateWishlistRequest): Wishlist {
@@ -18,7 +20,7 @@ class WishlistService(
                 id = UUID.randomUUID(),
                 name = request.name,
                 description = request.description,
-                ownerId = user.id,
+                owner = user,
                 privateMode = request.privateMode,
                 position = getByOwnerId(user.id).size + 1,
                 items = mutableListOf(),
@@ -33,5 +35,35 @@ class WishlistService(
 
     fun getById(id: UUID): Wishlist {
         return wishlistRepository.getById(id)
+    }
+
+    fun delete(id: UUID) {
+        getById(id).items.forEach { itemRepository.deleteById(it.id) }
+
+        val wishlist = wishlistRepository.getById(id)
+        val wishlists = wishlistRepository.findByOwnerId(wishlist.owner.id)
+        wishlists.filter { it.position > wishlist.position }
+            .map {
+                it.position -= 1
+                wishlistRepository.save(it)
+            }
+        wishlistRepository.deleteById(id)
+    }
+
+    fun update(request: UpdateWishlistRequest): Wishlist {
+        val wishlist = getById(request.id)
+        if (request.name != null) {
+            wishlist.name = request.name
+        }
+
+        if (request.description != null) {
+            wishlist.description = request.description
+        }
+
+        if (request.privateMode != null) {
+            wishlist.privateMode = request.privateMode
+        }
+
+        return wishlistRepository.save(wishlist)
     }
 }

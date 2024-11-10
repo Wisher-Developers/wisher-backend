@@ -8,7 +8,13 @@ interface ItemRepository {
 
     fun save(item: Item): Item
 
+    fun deleteById(id: UUID)
+
     fun findById(id: UUID): Item?
+
+    fun findByWishlistId(id: UUID): List<Item>
+
+    fun getRecommendations(id: UUID): List<Item>
 
     fun getById(id: UUID): Item {
         return findById(id)
