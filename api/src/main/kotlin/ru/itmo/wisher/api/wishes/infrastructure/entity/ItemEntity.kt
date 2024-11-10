@@ -4,6 +4,8 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import org.springframework.data.domain.Limit
+import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
@@ -11,6 +13,9 @@ import java.util.UUID
 @Component
 interface ItemJpaRepository : CrudRepository<ItemEntity, UUID> {
     fun findByWishlistId(wishlistId: UUID): List<ItemEntity>
+
+    @Query("SELECT i FROM Item i, Wishlist w WHERE w.id=i.wishlist_id AND w.owner_id<>?1")
+    fun getRecommendations(id: UUID, limit: Limit): List<ItemEntity>
 }
 
 @Table(name = "item")

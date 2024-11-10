@@ -5,12 +5,14 @@ import ru.itmo.wisher.api.wishes.domain.CopyItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateWishlistRequest
 import ru.itmo.wisher.api.wishes.domain.Item
+import ru.itmo.wisher.api.wishes.domain.UpdateItemRequest
 import ru.itmo.wisher.api.wishes.domain.UpdateWishlistRequest
 import ru.itmo.wisher.api.wishes.domain.Wishlist
 import ru.itmo.wisher.api.wishes.presentation.model.CopyItemRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.CreateItemRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.CreateWishlistRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.ItemResponse
+import ru.itmo.wisher.api.wishes.presentation.model.UpdateItemRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.UpdateWishlistRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.WishlistResponse
 
@@ -35,6 +37,17 @@ fun CopyItemRequestDto.toDomain() =
         picture = picture,
         description = description,
         wishlistId = wishlistId,
+    )
+
+fun UpdateItemRequestDto.toDomain() =
+    UpdateItemRequest(
+        id = id,
+        name = name,
+        link = link,
+        priority = priority,
+        price = price,
+        picture = picture,
+        description = description,
     )
 
 fun Item.toResponse() =

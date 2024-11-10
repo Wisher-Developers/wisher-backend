@@ -52,14 +52,17 @@ class WishlistService(
 
     fun update(request: UpdateWishlistRequest): Wishlist {
         val wishlist = getById(request.id)
-        if (request.name != null)
-            wishlist.name = request.name!!
+        if (request.name != null) {
+            wishlist.name = request.name
+        }
 
-        if (request.description != null)
-            wishlist.description = request.description!!
+        if (request.description != null) {
+            wishlist.description = request.description
+        }
 
-        if (request.privateMode != null)
-            wishlist.privateMode = request.privateMode!!
+        if (request.privateMode != null) {
+            wishlist.privateMode = request.privateMode
+        }
 
         return wishlistRepository.save(wishlist)
     }

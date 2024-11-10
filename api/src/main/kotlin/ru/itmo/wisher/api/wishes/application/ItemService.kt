@@ -5,6 +5,7 @@ import ru.itmo.wisher.api.user.domain.User
 import ru.itmo.wisher.api.wishes.domain.CopyItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateItemRequest
 import ru.itmo.wisher.api.wishes.domain.Item
+import ru.itmo.wisher.api.wishes.domain.UpdateItemRequest
 import ru.itmo.wisher.api.wishes.domain.exception.UserIsNotOwnerException
 import java.util.UUID
 
@@ -14,7 +15,7 @@ class ItemService(
     private val wishlistRepository: WishlistRepository,
 ) {
 
-    fun create(request: CreateItemRequest) {
+    fun create(request: CreateItemRequest): Item {
         val wishlist = wishlistRepository.getById(request.wishlistId)
         if (User.current().id != wishlist.owner.id) {
             throw UserIsNotOwnerException(wishlist.id)
@@ -34,10 +35,10 @@ class ItemService(
                 idempotencyId = UUID.randomUUID(),
             )
 
-        itemRepository.save(item)
+        return itemRepository.save(item)
     }
 
-    fun copy(request: CopyItemRequest) {
+    fun copy(request: CopyItemRequest): Item {
         val wishlist = wishlistRepository.getById(request.wishlistId)
         if (User.current().id != wishlist.owner.id) {
             throw UserIsNotOwnerException(wishlist.id)
@@ -58,7 +59,41 @@ class ItemService(
                 idempotencyId = oldItem.idempotencyId,
             )
 
-        itemRepository.save(item)
+        return itemRepository.save(item)
+    }
+
+    fun update(request: UpdateItemRequest): Item {
+        val item = getById(request.id)
+        val wishlist = wishlistRepository.getById(item.wishlistId)
+        if (User.current().id != wishlist.owner.id) {
+            throw UserIsNotOwnerException(wishlist.id)
+        }
+
+        if (request.name != null) {
+            item.name = request.name
+        }
+
+        if (request.link != null) {
+            item.link = request.link
+        }
+
+        if (request.description != null) {
+            item.description = request.description
+        }
+
+        if (request.picture != null) {
+            item.picture = request.picture
+        }
+
+        if (request.price != null) {
+            item.price = request.price
+        }
+
+        if (request.priority != null) {
+            item.priority = request.priority
+        }
+
+        return itemRepository.save(item)
     }
 
     fun delete(id: UUID) {
@@ -74,5 +109,9 @@ class ItemService(
 
     fun getById(id: UUID): Item {
         return itemRepository.getById(id)
+    }
+
+    fun getRecommendations(): List<Item> {
+        return itemRepository.getRecommendations(User.current().id)
     }
 }
