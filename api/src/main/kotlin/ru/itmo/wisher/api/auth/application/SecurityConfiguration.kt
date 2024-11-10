@@ -55,27 +55,13 @@ class SecurityConfiguration : WebMvcConfigurer {
     }
 
     @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-        configuration.allowedOriginPatterns = listOf("/**")
-        configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        configuration.allowedHeaders = listOf("Authorization", "Content-Type")
-        configuration.allowCredentials = true
-
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
-    }
-
-    @Bean
     fun securityFilterChain(
         http: HttpSecurity,
         jwtAuthenticationFilter: JwtAuthFilter,
         authenticationProvider: AuthenticationProvider,
-        corsConfigurationSource: CorsConfigurationSource,
     ): SecurityFilterChain {
         http
-            .cors { it.configurationSource(corsConfigurationSource) }
+            .cors { it.disable() }
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it.requestMatchers("/api/auth/**").permitAll()
