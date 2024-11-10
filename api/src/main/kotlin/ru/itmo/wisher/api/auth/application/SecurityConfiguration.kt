@@ -64,6 +64,7 @@ class SecurityConfiguration : WebMvcConfigurer {
             .authorizeHttpRequests {
                 it.requestMatchers("/api/auth/**").permitAll()
                 it.requestMatchers("/api/users/{id}").permitAll()
+                it.requestMatchers("/error").permitAll()
                 it.anyRequest().authenticated()
             }
             .sessionManagement {
