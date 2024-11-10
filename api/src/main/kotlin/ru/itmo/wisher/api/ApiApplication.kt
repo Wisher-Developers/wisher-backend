@@ -15,12 +15,3 @@ class ApiApplication
 fun main(args: Array<String>) {
     runApplication<ApiApplication>(*args)
 }
-
-
-@Configuration
-@EnableWebMvc
-class WebConfig : WebMvcConfigurer {
-    override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**")
-    }
-}

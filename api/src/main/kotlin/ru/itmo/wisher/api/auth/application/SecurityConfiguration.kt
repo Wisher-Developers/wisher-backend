@@ -63,7 +63,6 @@ class SecurityConfiguration : WebMvcConfigurer {
 
 
         http
-            .cors { it.disable() }
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it.requestMatchers("/api/auth/**").permitAll()
