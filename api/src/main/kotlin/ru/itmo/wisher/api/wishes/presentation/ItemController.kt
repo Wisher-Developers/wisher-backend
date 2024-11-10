@@ -11,6 +11,7 @@ import ru.itmo.wisher.api.wishes.application.ItemService
 import ru.itmo.wisher.api.wishes.presentation.model.CopyItemRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.CreateItemRequestDto
 import ru.itmo.wisher.api.wishes.presentation.model.ItemResponse
+import ru.itmo.wisher.api.wishes.presentation.model.UpdateItemRequestDto
 import java.util.UUID
 
 @RestController
@@ -22,16 +23,22 @@ class ItemController(
     @PostMapping("create")
     fun create(
         @RequestBody request: CreateItemRequestDto,
-    ): ResponseEntity<Void> {
-        itemService.create(request.toDomain())
-        return ResponseEntity.noContent().build()
+    ): ResponseEntity<ItemResponse> {
+        return ResponseEntity.ok(itemService.create(request.toDomain()).toResponse())
     }
 
     @PostMapping("copy")
     fun copy(
         @RequestBody request: CopyItemRequestDto,
+    ): ResponseEntity<ItemResponse> {
+        return ResponseEntity.ok(itemService.copy(request.toDomain()).toResponse())
+    }
+
+    @PostMapping("delete/{id}")
+    fun delete(
+        @PathVariable id: UUID,
     ): ResponseEntity<Void> {
-        itemService.copy(request.toDomain())
+        itemService.delete(id)
         return ResponseEntity.noContent().build()
     }
 
@@ -40,5 +47,17 @@ class ItemController(
         @PathVariable id: UUID,
     ): ResponseEntity<ItemResponse> {
         return ResponseEntity.ok(itemService.getById(id).toResponse())
+    }
+
+    @PostMapping("update")
+    fun update(
+        @RequestBody request: UpdateItemRequestDto,
+    ): ResponseEntity<ItemResponse> {
+        return ResponseEntity.ok(itemService.update(request.toDomain()).toResponse())
+    }
+
+    @GetMapping("recommendations")
+    fun getRecommendations(): ResponseEntity<List<ItemResponse>> {
+        return ResponseEntity.ok(itemService.getRecommendations().map { it.toResponse() })
     }
 }
