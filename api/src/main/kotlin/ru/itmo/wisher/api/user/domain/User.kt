@@ -28,6 +28,13 @@ data class User(
     override fun isEnabled() = true
 
     companion object {
-        fun current(): User = SecurityContextHolder.getContext().authentication.principal as User
+        fun current(): User = currentOrNull() ?: throw IllegalStateException()
+
+        fun currentOrNull(): User? =
+            try {
+                SecurityContextHolder.getContext().authentication.principal as User
+            } catch (ex: Exception) {
+                null
+            }
     }
 }

@@ -18,6 +18,12 @@ interface ItemJpaRepository : CrudRepository<ItemEntity, UUID> {
         "SELECT i FROM ItemEntity i, WishlistEntity w WHERE w.id=i.wishlistId AND w.owner.id<>?1",
     )
     fun getRecommendations(id: UUID, limit: Limit): List<ItemEntity>
+
+    @Query(
+        "SELECT * FROM item",
+        nativeQuery = true,
+    )
+    fun getRecommendationsUnauthorized(limit: Limit): List<ItemEntity>
 }
 
 @Table(name = "item")
