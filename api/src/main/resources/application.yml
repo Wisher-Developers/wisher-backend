@@ -10,14 +10,6 @@ security:
         secret-key: ${JWT_SECRET_KEY}
         expiration-time: 604800  # = 1 неделя
 
-server:
-    ssl:
-        key-store-type: PKCS12
-        key-store: classpath:keystore/wisher.p12
-        key-store-password: 7364Tg
-        key-store-alias: wisher
-        enabled: true
-
 #logging:
 #    level:
 #        org:
