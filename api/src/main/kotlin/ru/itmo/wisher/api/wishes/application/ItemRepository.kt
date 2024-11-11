@@ -14,7 +14,9 @@ interface ItemRepository {
 
     fun findByWishlistId(id: UUID): List<Item>
 
-    fun getRecommendations(id: UUID): List<Item>
+    fun getUserRecommendations(id: UUID): List<Item>
+
+    fun getRandomRecommendations(): List<Item>
 
     fun getById(id: UUID): Item {
         return findById(id)

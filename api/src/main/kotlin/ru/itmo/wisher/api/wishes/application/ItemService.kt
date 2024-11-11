@@ -112,6 +112,9 @@ class ItemService(
     }
 
     fun getRecommendations(): List<Item> {
-        return itemRepository.getRecommendations(User.current().id)
+        return User.currentOrNull()?.let {
+            itemRepository.getUserRecommendations(it.id)
+        }
+            ?: itemRepository.getRandomRecommendations()
     }
 }

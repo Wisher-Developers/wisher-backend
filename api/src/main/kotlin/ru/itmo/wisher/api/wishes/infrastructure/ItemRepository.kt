@@ -35,9 +35,15 @@ class ItemRepository(
         itemJpaRepository.deleteById(id)
     }
 
-    override fun getRecommendations(id: UUID): List<Item> {
+    override fun getUserRecommendations(id: UUID): List<Item> {
         return itemJpaRepository
             .getRecommendations(id, Limit.of(RECOMMENDATIONS_LIMIT))
+            .map { itemCodec.decode(it) }
+    }
+
+    override fun getRandomRecommendations(): List<Item> {
+        return itemJpaRepository
+            .getRecommendationsUnauthorized(Limit.of(RECOMMENDATIONS_LIMIT))
             .map { itemCodec.decode(it) }
     }
 
