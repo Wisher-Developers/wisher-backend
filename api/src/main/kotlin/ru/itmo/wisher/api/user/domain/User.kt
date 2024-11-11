@@ -30,6 +30,11 @@ data class User(
     companion object {
         fun current(): User = currentOrNull() ?: throw IllegalStateException()
 
-        fun currentOrNull(): User? = SecurityContextHolder.getContext().authentication.principal as? User
+        fun currentOrNull(): User? =
+            try {
+                SecurityContextHolder.getContext().authentication.principal as User
+            } catch (ex: Exception) {
+                null
+            }
     }
 }
