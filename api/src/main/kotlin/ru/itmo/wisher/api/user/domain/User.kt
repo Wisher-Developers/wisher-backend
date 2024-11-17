@@ -6,11 +6,11 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
 
 data class User(
-    val id: UUID,
-    val userName: String,
-    val email: String,
-    val avatarLink: String? = null,
-    private val password: String,
+    var id: UUID,
+    var userName: String,
+    var email: String,
+    var avatarLink: String? = null,
+    var password: String,
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
