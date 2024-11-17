@@ -30,12 +30,16 @@ class FriendProcessingService(
 
     fun sendRequest(id: UUID) {
         val user = User.currentOrNull() ?: throw NullPointerException()
-        requestRepository.save(
-            Request(
-                userRepository.getById(user.id),
-                userRepository.getById(id),
-            ),
-        )
+        if (requestRepository.findAllBySenderId(id).any { it.receiver.id == user.id }) {
+            acceptRequest(id)
+        } else {
+            requestRepository.save(
+                Request(
+                    userRepository.getById(user.id),
+                    userRepository.getById(id),
+                ),
+            )
+        }
     }
 
     fun acceptRequest(id: UUID) {
