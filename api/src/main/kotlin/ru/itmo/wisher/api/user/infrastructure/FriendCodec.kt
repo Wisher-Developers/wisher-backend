@@ -3,6 +3,7 @@ package ru.itmo.wisher.api.user.infrastructure
 import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.user.domain.Friend
 import ru.itmo.wisher.api.user.infrastructure.entity.FriendEntity
+import ru.itmo.wisher.api.user.infrastructure.entity.FriendId
 
 @Component
 class FriendCodec(
@@ -10,6 +11,11 @@ class FriendCodec(
 ) {
     fun encode(domain: Friend) =
         FriendEntity(
+            id =
+                FriendId(
+                    initiatorId = domain.initiator.id,
+                    initiatedId = domain.initiated.id,
+                ),
             initiator = userCodec.encode(domain.initiator),
             initiated = userCodec.encode(domain.initiated),
         )

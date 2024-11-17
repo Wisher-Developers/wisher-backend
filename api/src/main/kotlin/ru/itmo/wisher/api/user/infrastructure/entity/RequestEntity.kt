@@ -1,12 +1,13 @@
 package ru.itmo.wisher.api.user.infrastructure.entity
 
+import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
+import jakarta.persistence.EmbeddedId
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
-import jakarta.persistence.Id
-import jakarta.persistence.IdClass
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.MapsId
 import jakarta.persistence.Table
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
@@ -23,17 +24,29 @@ interface RequestJpaRepository : CrudRepository<RequestEntity, UUID> {
     fun findAllByReceiverId(id: UUID): List<RequestEntity>
 }
 
-@Table(name = "friend_request")
-@Entity
 @Embeddable
-@IdClass(RequestEntity::class)
+class RequestId(
+    @Column(name = "sender_id")
+    var senderId: UUID? = null,
+
+    @Column(name = "receiver_id")
+    var receiverId: UUID? = null,
+) : Serializable
+
+@Entity
+@Table(name = "friend_request")
 data class RequestEntity(
-    @Id
+
+    @EmbeddedId
+    var id: RequestId,
+
+    @MapsId("senderId")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id")
+    @JoinColumn(name = "sender_id", referencedColumnName = "id")
     var sender: UserEntity,
-    @Id
+
+    @MapsId("receiverId")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_id")
+    @JoinColumn(name = "receiver_id", referencedColumnName = "id")
     var receiver: UserEntity,
 ) : Serializable
