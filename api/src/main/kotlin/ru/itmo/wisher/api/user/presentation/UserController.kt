@@ -12,8 +12,6 @@ import ru.itmo.wisher.api.user.domain.User
 import ru.itmo.wisher.api.user.presentation.conversion.toDomain
 import ru.itmo.wisher.api.user.presentation.conversion.toDto
 import ru.itmo.wisher.api.user.presentation.model.UpdateUserRequestDto
-import ru.itmo.wisher.api.wishes.presentation.toDomain
-import ru.itmo.wisher.api.wishes.presentation.toResponse
 import java.util.UUID
 import ru.itmo.wisher.api.user.presentation.model.User as UserDto
 

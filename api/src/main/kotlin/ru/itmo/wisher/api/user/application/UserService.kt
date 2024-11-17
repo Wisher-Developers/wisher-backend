@@ -18,7 +18,7 @@ class UserService(
             User(
                 id = UUID.randomUUID(),
                 userName = request.username,
-                password = passwordEncoder.encode(request.password),
+                passWord = passwordEncoder.encode(request.password),
                 email = request.email,
             )
 
@@ -40,7 +40,7 @@ class UserService(
         }
 
         if (request.password != null) {
-            user.password = request.password
+            user.passWord = request.password
         }
 
         if (request.email != null) {

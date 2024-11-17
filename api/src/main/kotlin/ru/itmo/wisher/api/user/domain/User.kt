@@ -10,12 +10,12 @@ data class User(
     var userName: String,
     var email: String,
     var avatarLink: String? = null,
-    var password: String,
+    var passWord: String,
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
 
-    override fun getPassword() = password
+    override fun getPassword() = passWord
 
     override fun getUsername() = userName
 
