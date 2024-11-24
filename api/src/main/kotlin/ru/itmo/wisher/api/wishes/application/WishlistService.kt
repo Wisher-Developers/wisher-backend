@@ -129,14 +129,15 @@ class WishlistService(
                     return true
 
                 friendRepository.findAllByInitiatedId(user.id).any { it.initiator.id == wishlist.owner.id } ||
-                    friendRepository.findAllByInitiatorId(user.id).any { it.initiated.id == wishlist.owner.id }
+                    friendRepository.findAllByInitiatorId(user.id).any { it.initiated.id == wishlist.owner.id } ||
+                    accessRepository.findByWishlistId(wishlist.id).any { it.user.id == user.id }
             }
             PrivateMode.RESTRICTED -> {
                 val user = User.current()
                 if (wishlist.owner.id == user.id)
                     return true
 
-                false
+                accessRepository.findByWishlistId(wishlist.id).any { it.user.id == user.id }
             }
         }
     }
