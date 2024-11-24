@@ -18,6 +18,8 @@ import java.util.UUID
 @Component
 interface WishlistJpaRepository : CrudRepository<WishlistEntity, UUID> {
     fun findByOwnerId(ownerId: UUID): List<WishlistEntity>
+
+    fun findByAccessLink(accessLink: String): WishlistEntity?
 }
 
 @Table(name = "wishlist")
