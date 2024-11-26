@@ -3,11 +3,15 @@ package ru.itmo.wisher.api.user.presentation
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.itmo.wisher.api.user.application.UserService
 import ru.itmo.wisher.api.user.domain.User
+import ru.itmo.wisher.api.user.presentation.conversion.toDomain
 import ru.itmo.wisher.api.user.presentation.conversion.toDto
+import ru.itmo.wisher.api.user.presentation.model.UpdateUserRequestDto
 import java.util.UUID
 import ru.itmo.wisher.api.user.presentation.model.User as UserDto
 
@@ -31,5 +35,12 @@ class UserController(
         val user = userService.getById(id)
 
         return ResponseEntity.ok(user.toDto())
+    }
+
+    @PostMapping("update")
+    fun update(
+        @RequestBody request: UpdateUserRequestDto,
+    ): ResponseEntity<UserDto> {
+        return ResponseEntity.ok(userService.update(request.toDomain()).toDto())
     }
 }
