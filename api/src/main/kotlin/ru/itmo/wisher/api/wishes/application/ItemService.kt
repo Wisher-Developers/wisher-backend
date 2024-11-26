@@ -1,6 +1,7 @@
 package ru.itmo.wisher.api.wishes.application
 
 import org.springframework.stereotype.Component
+import ru.itmo.wisher.api.kafka.infrastructure.KafkaProducer
 import ru.itmo.wisher.api.user.domain.User
 import ru.itmo.wisher.api.wishes.domain.CopyItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateItemRequest
@@ -13,6 +14,7 @@ import java.util.UUID
 class ItemService(
     private val itemRepository: ItemRepository,
     private val wishlistRepository: WishlistRepository,
+    private val kafkaProducer: KafkaProducer,
 ) {
 
     fun create(request: CreateItemRequest): Item {
@@ -34,6 +36,8 @@ class ItemService(
                 position = wishlist.items.size + 1,
                 idempotencyId = UUID.randomUUID(),
             )
+
+        kafkaProducer.sendMessage(item)
 
         return itemRepository.save(item)
     }
