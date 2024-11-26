@@ -24,6 +24,12 @@ class WishlistRepository(
             ?.let { wishlistCodec.decode(it) }
     }
 
+    override fun findByAccessLink(accessLink: String): Wishlist? {
+        return wishlistJpaRepository
+            .findByAccessLink(accessLink)
+            ?.let { wishlistCodec.decode(it) }
+    }
+
     override fun findByOwnerId(id: UUID): List<Wishlist> {
         return wishlistJpaRepository
             .findByOwnerId(id)
