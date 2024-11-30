@@ -16,9 +16,11 @@ import java.util.UUID
 class FriendController(
     private val friendProcessingService: FriendProcessingService,
 ) {
-    @GetMapping("/")
-    fun getFriends(): ResponseEntity<List<User>> {
-        val friends = friendProcessingService.getFriends()
+    @GetMapping("/{id}")
+    fun getFriends(
+        @PathVariable id: UUID,
+    ): ResponseEntity<List<User>> {
+        val friends = friendProcessingService.getFriends(id)
         return ResponseEntity.ok(friends.map { it.toDto() })
     }
 

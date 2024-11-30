@@ -12,10 +12,9 @@ class FriendProcessingService(
     private val friendRepository: FriendRepository,
     private val requestRepository: RequestRepository,
 ) {
-    fun getFriends(): List<User> {
-        val user = User.currentOrNull() ?: throw NullPointerException()
-        return friendRepository.findAllByInitiatedId(user.id).map { it.initiator } +
-            friendRepository.findAllByInitiatorId(user.id).map { it.initiator }
+    fun getFriends(id: UUID): List<User> {
+        return friendRepository.findAllByInitiatedId(id).map { it.initiator } +
+            friendRepository.findAllByInitiatorId(id).map { it.initiator }
     }
 
     fun getRequestsReceived(): List<User> {
