@@ -33,6 +33,10 @@ class UserService(
         return userRepository.getById(id)
     }
 
+    fun getBySubstring(substring: String): List<User> {
+        return userRepository.findAllByUsernameSubstring(substring)
+    }
+
     fun update(request: UpdateUserRequest): User {
         val user = getById(request.id)
         if (request.username != null) {

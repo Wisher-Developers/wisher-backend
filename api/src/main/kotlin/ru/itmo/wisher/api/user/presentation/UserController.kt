@@ -43,4 +43,11 @@ class UserController(
     ): ResponseEntity<UserDto> {
         return ResponseEntity.ok(userService.update(request.toDomain()).toDto())
     }
+
+    @GetMapping("{substring}")
+    fun findBySubstring(
+        @PathVariable substring: String,
+    ): ResponseEntity<List<UserDto>> {
+        return ResponseEntity.ok(userService.getBySubstring(substring).map { it.toDto() })
+    }
 }

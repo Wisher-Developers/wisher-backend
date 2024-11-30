@@ -22,4 +22,6 @@ interface UserRepository {
         return findById(id)
             ?: throw NoSuchId(id)
     }
+
+    fun findAllByUsernameSubstring(substring: String): List<User>
 }
