@@ -4,13 +4,15 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-interface UserJpaRepository : CrudRepository<UserEntity, UUID> {
+interface UserJpaRepository : JpaRepository<UserEntity, UUID> {
     fun findByUsername(username: String): UserEntity?
+
+    fun findByUsernameContaining(username: String): List<UserEntity>
 }
 
 @Table(name = "users")
