@@ -44,7 +44,7 @@ class UserController(
         return ResponseEntity.ok(userService.update(request.toDomain()).toDto())
     }
 
-    @GetMapping("{substring}")
+    @GetMapping("search/{substring}")
     fun findBySubstring(
         @PathVariable substring: String,
     ): ResponseEntity<List<UserDto>> {
