@@ -3,6 +3,7 @@ package ru.itmo.wisher.api.kafka.infrastructure
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.user.infrastructure.entity.UserJpaRepository
+import ru.itmo.wisher.api.wishes.infrastructure.ItemRepository
 import ru.itmo.wisher.api.wishes.infrastructure.entity.UserRecommendationEntity
 import ru.itmo.wisher.api.wishes.infrastructure.entity.UserRecommendationJpaRepository
 
@@ -10,6 +11,7 @@ import ru.itmo.wisher.api.wishes.infrastructure.entity.UserRecommendationJpaRepo
 class KafkaConsumer(
     private val recommendationJpaRepository: UserRecommendationJpaRepository,
     private val userJpaRepository: UserJpaRepository,
+    private val itemRepository: ItemRepository,
 ) {
 
     @KafkaListener(topics = ["product-response"], groupId = "wisher")
@@ -24,17 +26,23 @@ class KafkaConsumer(
                 return
             }
 
+        val userItems = itemRepository.getAllByUserId(userId)
+
         val recommendations =
-            message.products.mapIndexed { index, uuid ->
-                UserRecommendationEntity(
-                    id =
-                        UserRecommendationEntity.Id(
-                            userId = userId,
-                            itemId = uuid,
-                        ),
-                    indexNumber = index,
-                )
-            }
+            message.products
+                .filter { itemUuid ->
+                    userItems.none { itemUuid == it.id }
+                }
+                .mapIndexed { index, uuid ->
+                    UserRecommendationEntity(
+                        id =
+                            UserRecommendationEntity.Id(
+                                userId = userId,
+                                itemId = uuid,
+                            ),
+                        indexNumber = index,
+                    )
+                }
 
         recommendations.forEach {
             try {
