@@ -8,9 +8,9 @@ import java.util.*
 
 data class User(
     val id: UUID,
-    val userName: String,
-    val email: String,
-    val avatarLink: String? = null,
+    var userName: String,
+    var email: String,
+    var avatarLink: String? = null,
     var passWord: String,
     val lastLogin: Instant,
     val lastRecommendationId: UUID? = null,

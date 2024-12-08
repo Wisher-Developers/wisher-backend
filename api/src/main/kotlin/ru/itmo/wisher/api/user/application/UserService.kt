@@ -40,7 +40,11 @@ class UserService(
     }
 
     fun getBySubstring(substring: String): List<User> {
-        return userRepository.findAllByUsernameSubstring(substring)
+        val user = User.currentOrNull()
+
+        return userRepository
+            .findAllByUsernameSubstring(substring)
+            .filterNot { it.id == user?.id }
     }
 
     fun update(request: UpdateUserRequest): User {
