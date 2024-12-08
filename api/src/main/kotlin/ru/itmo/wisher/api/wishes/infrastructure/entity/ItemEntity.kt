@@ -1,6 +1,8 @@
 package ru.itmo.wisher.api.wishes.infrastructure.entity
 
 import jakarta.persistence.Column
+import jakarta.persistence.Embeddable
+import jakarta.persistence.EmbeddedId
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Limit
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Component
+import java.io.Serializable
 import java.util.UUID
 
 @Component
@@ -24,7 +27,16 @@ interface ItemJpaRepository : CrudRepository<ItemEntity, UUID> {
         nativeQuery = true,
     )
     fun getRecommendationsUnauthorized(limit: Limit): List<ItemEntity>
+
+    @Query(
+        "SELECT * FROM item WHERE wishlist_id IN (SELECT id FROM wishlist WHERE owner_id=?1)",
+        nativeQuery = true,
+    )
+    fun getAllByUserId(userId: UUID): List<ItemEntity>
 }
+
+@Component
+interface UserRecommendationJpaRepository : CrudRepository<UserRecommendationEntity, UserRecommendationEntity.Id>
 
 @Table(name = "item")
 @Entity
@@ -51,3 +63,20 @@ class ItemEntity(
     @Column(name = "idempotency_id")
     var idempotencyId: UUID,
 )
+
+@Table(name = "item_user")
+@Entity
+class UserRecommendationEntity(
+    @EmbeddedId
+    var id: Id,
+    @Column(name = "index_number")
+    var indexNumber: Int,
+) {
+    @Embeddable
+    class Id(
+        @Column(name = "user_id")
+        var userId: UUID,
+        @Column(name = "item_id")
+        var itemId: UUID,
+    ) : Serializable
+}

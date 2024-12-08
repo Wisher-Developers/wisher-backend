@@ -3,6 +3,7 @@ package ru.itmo.wisher.api.user.domain
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
+import java.time.Instant
 import java.util.*
 
 data class User(
@@ -11,7 +12,13 @@ data class User(
     val email: String,
     val avatarLink: String? = null,
     private val password: String,
+    val lastLogin: Instant,
+    val lastRecommendationId: UUID? = null,
 ) : UserDetails {
+
+    fun loggedIn() = copy(lastLogin = Instant.now())
+
+    fun withRecommendationId(id: UUID) = copy(lastRecommendationId = id)
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
 

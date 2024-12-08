@@ -22,4 +22,6 @@ interface UserRepository {
         return findById(id)
             ?: throw NoSuchId(id)
     }
+
+    fun getUserIdByRecommendationRequestId(id: UUID): UUID
 }

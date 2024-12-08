@@ -21,7 +21,26 @@ class KafkaTopicConfiguration {
     }
 
     @Bean
-    fun topic1(): NewTopic {
-        return NewTopic("baeldung", 1, 1.toShort())
+    fun productAddTopic(
+        @Value("\${spring.kafka.topics.product-add}")
+        topicName: String,
+    ): NewTopic {
+        return NewTopic(topicName, 1, 1.toShort())
+    }
+
+    @Bean
+    fun productSearchTopic(
+        @Value("\${spring.kafka.topics.product-search}")
+        topicName: String,
+    ): NewTopic {
+        return NewTopic(topicName, 1, 1.toShort())
+    }
+
+    @Bean
+    fun productResponseTopic(
+        @Value("\${spring.kafka.topics.product-response}")
+        topicName: String,
+    ): NewTopic {
+        return NewTopic(topicName, 1, 1.toShort())
     }
 }

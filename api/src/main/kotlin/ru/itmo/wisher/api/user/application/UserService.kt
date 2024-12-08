@@ -4,6 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.auth.domain.SignUpRequest
 import ru.itmo.wisher.api.user.domain.User
+import java.time.Instant
 import java.util.*
 
 @Component
@@ -19,6 +20,7 @@ class UserService(
                 userName = request.username,
                 password = passwordEncoder.encode(request.password),
                 email = request.email,
+                lastLogin = Instant.now(),
             )
 
         userRepository.save(user)
@@ -30,5 +32,9 @@ class UserService(
 
     fun getById(id: UUID): User {
         return userRepository.getById(id)
+    }
+
+    fun save(user: User): User {
+        return userRepository.save(user)
     }
 }

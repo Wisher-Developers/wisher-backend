@@ -7,5 +7,6 @@
     <include file="db/changelog/mvp/example.sql"/>
     <include file="db/changelog/mvp/all-tables-first-init.sql"/>
     <include file="db/changelog/mvp/change-idempotency-id-to-uuid.sql"/>
+    <include file="db/changelog/mvp/add-last-login-for-user.sql"/>
 
 </databaseChangeLog>

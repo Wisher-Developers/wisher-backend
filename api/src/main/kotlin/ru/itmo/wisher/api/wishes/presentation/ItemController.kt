@@ -60,4 +60,11 @@ class ItemController(
     fun getRecommendations(): ResponseEntity<List<ItemResponse>> {
         return ResponseEntity.ok(itemService.getRecommendations().map { it.toResponse() })
     }
+
+    @PostMapping("recommendations")
+    fun triggerNewRecommendations(): ResponseEntity<Void> {
+        itemService.buildRecommendations()
+
+        return ResponseEntity.noContent().build()
+    }
 }

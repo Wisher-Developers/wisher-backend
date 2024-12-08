@@ -1,25 +1,34 @@
 package ru.itmo.wisher.api.wishes.application
 
 import org.springframework.stereotype.Component
-import ru.itmo.wisher.api.kafka.infrastructure.KafkaProducer
+import ru.itmo.wisher.api.kafka.application.IKafkaProducer
+import ru.itmo.wisher.api.kafka.application.KafkaMessageBuilder
+import ru.itmo.wisher.api.kafka.infrastructure.NewWishItemMessage
+import ru.itmo.wisher.api.kafka.infrastructure.SuggestMatchingWishItemsMessage
 import ru.itmo.wisher.api.user.domain.User
 import ru.itmo.wisher.api.wishes.domain.CopyItemRequest
 import ru.itmo.wisher.api.wishes.domain.CreateItemRequest
 import ru.itmo.wisher.api.wishes.domain.Item
 import ru.itmo.wisher.api.wishes.domain.UpdateItemRequest
 import ru.itmo.wisher.api.wishes.domain.exception.UserIsNotOwnerException
+import java.time.Instant
 import java.util.UUID
 
 @Component
 class ItemService(
     private val itemRepository: ItemRepository,
     private val wishlistRepository: WishlistRepository,
-    private val kafkaProducer: KafkaProducer,
+    private val kafkaMessageBuilder: KafkaMessageBuilder,
+    private val kafkaNewWishItemProducer: IKafkaProducer<NewWishItemMessage>,
+    private val kafkaSuggestWishitemsProducer: IKafkaProducer<SuggestMatchingWishItemsMessage>,
 ) {
 
     fun create(request: CreateItemRequest): Item {
         val wishlist = wishlistRepository.getById(request.wishlistId)
-        if (User.current().id != wishlist.owner.id) {
+
+        val user = User.current()
+
+        if (user.id != wishlist.owner.id) {
             throw UserIsNotOwnerException(wishlist.id)
         }
 
@@ -37,7 +46,16 @@ class ItemService(
                 idempotencyId = UUID.randomUUID(),
             )
 
-        kafkaProducer.sendMessage(item)
+        val newWishItemMessage = kafkaMessageBuilder.buildNewWishItemMessage(item)
+        kafkaNewWishItemProducer.send(newWishItemMessage)
+
+        val items = getAllByUserId(user.id) + item
+        val buildRecommendationsMessage =
+            kafkaMessageBuilder.buildSuggestMatchingWishItemsMessage(
+                user,
+                items,
+            )
+        kafkaSuggestWishitemsProducer.send(buildRecommendationsMessage)
 
         return itemRepository.save(item)
     }
@@ -120,5 +138,29 @@ class ItemService(
             itemRepository.getUserRecommendations(it.id)
         }
             ?: itemRepository.getRandomRecommendations()
+    }
+
+    fun buildRecommendations() {
+        val user =
+            User.currentOrNull()
+                ?: return
+
+        val oneDayAgo = Instant.now().minusSeconds(86400)
+
+        if (user.lastLogin.isBefore(oneDayAgo)) {
+            val items = getAllByUserId(user.id)
+
+            val kafkaMessage =
+                kafkaMessageBuilder.buildSuggestMatchingWishItemsMessage(
+                    user,
+                    items,
+                )
+
+            kafkaSuggestWishitemsProducer.send(kafkaMessage)
+        }
+    }
+
+    fun getAllByUserId(userId: UUID): List<Item> {
+        return itemRepository.getAllByUserId(userId)
     }
 }

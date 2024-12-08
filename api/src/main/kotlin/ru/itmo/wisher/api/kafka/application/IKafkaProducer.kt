@@ -1,3 +1,5 @@
 package ru.itmo.wisher.api.kafka.application
 
-interface IKafkaProducer
+interface IKafkaProducer<T> {
+    fun send(message: T)
+}
