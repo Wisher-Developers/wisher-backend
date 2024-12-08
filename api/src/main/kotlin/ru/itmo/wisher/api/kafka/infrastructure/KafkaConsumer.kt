@@ -30,19 +30,19 @@ class KafkaConsumer(
 
         val recommendations =
             message.products
-                .filter {  itemUuid ->
+                .filter { itemUuid ->
                     userItems.none { itemUuid == it.id }
                 }
                 .mapIndexed { index, uuid ->
-                UserRecommendationEntity(
-                    id =
-                        UserRecommendationEntity.Id(
-                            userId = userId,
-                            itemId = uuid,
-                        ),
-                    indexNumber = index,
-                )
-            }
+                    UserRecommendationEntity(
+                        id =
+                            UserRecommendationEntity.Id(
+                                userId = userId,
+                                itemId = uuid,
+                            ),
+                        indexNumber = index,
+                    )
+                }
 
         recommendations.forEach {
             try {
