@@ -14,7 +14,7 @@ class FriendProcessingService(
 ) {
     fun getFriends(id: UUID): List<User> {
         return friendRepository.findAllByInitiatedId(id).map { it.initiator } +
-            friendRepository.findAllByInitiatorId(id).map { it.initiator }
+            friendRepository.findAllByInitiatorId(id).map { it.initiated }
     }
 
     fun getRequestsReceived(): List<User> {
