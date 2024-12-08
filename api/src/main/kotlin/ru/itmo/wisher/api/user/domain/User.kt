@@ -11,7 +11,7 @@ data class User(
     val userName: String,
     val email: String,
     val avatarLink: String? = null,
-    private val password: String,
+    var passWord: String,
     val lastLogin: Instant,
     val lastRecommendationId: UUID? = null,
 ) : UserDetails {
@@ -22,7 +22,7 @@ data class User(
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
 
-    override fun getPassword() = password
+    override fun getPassword() = passWord
 
     override fun getUsername() = userName
 

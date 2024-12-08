@@ -3,6 +3,7 @@ package ru.itmo.wisher.api.user.application
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.auth.domain.SignUpRequest
+import ru.itmo.wisher.api.user.domain.UpdateUserRequest
 import ru.itmo.wisher.api.user.domain.User
 import java.time.Instant
 import java.util.*
@@ -18,7 +19,7 @@ class UserService(
             User(
                 id = UUID.randomUUID(),
                 userName = request.username,
-                password = passwordEncoder.encode(request.password),
+                passWord = passwordEncoder.encode(request.password),
                 email = request.email,
                 lastLogin = Instant.now(),
             )
@@ -35,6 +36,31 @@ class UserService(
     }
 
     fun save(user: User): User {
+        return userRepository.save(user)
+    }
+
+    fun getBySubstring(substring: String): List<User> {
+        return userRepository.findAllByUsernameSubstring(substring)
+    }
+
+    fun update(request: UpdateUserRequest): User {
+        val user = getById(request.id)
+        if (request.username != null) {
+            user.userName = request.username
+        }
+
+        if (request.password != null) {
+            user.passWord = request.password
+        }
+
+        if (request.email != null) {
+            user.email = request.email
+        }
+
+        if (request.avatar != null) {
+            user.avatarLink = request.avatar
+        }
+
         return userRepository.save(user)
     }
 }

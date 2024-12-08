@@ -22,7 +22,7 @@ class UserCodec {
         User(
             id = entity.id,
             userName = entity.username,
-            password = entity.password,
+            passWord = entity.password,
             email = entity.email,
             avatarLink = entity.avatar,
             lastLogin = entity.lastLogin,

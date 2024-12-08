@@ -43,4 +43,10 @@ class UserRepository(
             .get()
             .let { userCodec.decode(it) }
     }
+
+    override fun findAllByUsernameSubstring(substring: String): List<User> {
+        return userJpaRepository
+            .findByUsernameContaining(substring)
+            .map { userCodec.decode(it) }
+    }
 }

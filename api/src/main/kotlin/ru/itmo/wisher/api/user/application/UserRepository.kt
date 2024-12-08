@@ -24,4 +24,6 @@ interface UserRepository {
     }
 
     fun getUserIdByRecommendationRequestId(id: UUID): UUID
+
+    fun findAllByUsernameSubstring(substring: String): List<User>
 }
