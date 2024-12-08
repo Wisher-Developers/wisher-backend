@@ -26,6 +26,11 @@ class UserRepository(
             .let { userCodec.decode(it) }
     }
 
+    override fun getUserIdByRecommendationRequestId(id: UUID): UUID {
+        return userJpaRepository
+            .getUserIdByRecommendationRequestId(id)
+    }
+
     override fun findByUsername(username: String): User? {
         return userJpaRepository
             .findByUsername(username)

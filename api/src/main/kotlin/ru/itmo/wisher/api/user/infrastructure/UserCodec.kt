@@ -14,6 +14,8 @@ class UserCodec {
             password = domain.password,
             email = domain.email,
             avatar = domain.avatarLink,
+            lastLogin = domain.lastLogin,
+            lastRequestRecommendationId = domain.lastRecommendationId,
         )
 
     fun decode(entity: UserEntity) =
@@ -23,5 +25,7 @@ class UserCodec {
             passWord = entity.password,
             email = entity.email,
             avatarLink = entity.avatar,
+            lastLogin = entity.lastLogin,
+            lastRecommendationId = entity.lastRequestRecommendationId,
         )
 }

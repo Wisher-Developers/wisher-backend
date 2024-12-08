@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.auth.domain.SignUpRequest
 import ru.itmo.wisher.api.user.domain.UpdateUserRequest
 import ru.itmo.wisher.api.user.domain.User
+import java.time.Instant
 import java.util.*
 
 @Component
@@ -20,6 +21,7 @@ class UserService(
                 userName = request.username,
                 passWord = passwordEncoder.encode(request.password),
                 email = request.email,
+                lastLogin = Instant.now(),
             )
 
         userRepository.save(user)
@@ -33,8 +35,16 @@ class UserService(
         return userRepository.getById(id)
     }
 
+    fun save(user: User): User {
+        return userRepository.save(user)
+    }
+
     fun getBySubstring(substring: String): List<User> {
-        return userRepository.findAllByUsernameSubstring(substring)
+        val user = User.currentOrNull()
+
+        return userRepository
+            .findAllByUsernameSubstring(substring)
+            .filterNot { it.id == user?.id }
     }
 
     fun update(request: UpdateUserRequest): User {

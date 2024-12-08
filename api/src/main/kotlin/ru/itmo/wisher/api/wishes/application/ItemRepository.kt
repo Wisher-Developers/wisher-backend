@@ -22,4 +22,6 @@ interface ItemRepository {
         return findById(id)
             ?: throw ItemException(id)
     }
+
+    fun getAllByUserId(userId: UUID): List<Item>
 }

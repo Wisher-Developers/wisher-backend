@@ -10,10 +10,13 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
+import ru.itmo.wisher.api.user.application.UserService
+import ru.itmo.wisher.api.user.domain.User
 
 @Component
 class JwtAuthFilter(
     private val jwtService: JwtService,
+    private val userService: UserService,
     private val userDetailsService: UserDetailsService,
 ) : OncePerRequestFilter() {
 
@@ -27,6 +30,10 @@ class JwtAuthFilter(
         if (jwtService.validateToken(token)) {
             val username: String = jwtService.getUsername(token)
             val userDetails = userDetailsService.loadUserByUsername(username)
+
+            val user = (userDetails as User).loggedIn()
+
+            userService.save(user)
 
             val authToken =
                 UsernamePasswordAuthenticationToken(

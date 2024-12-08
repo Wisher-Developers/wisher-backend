@@ -14,3 +14,13 @@ data class Item(
     var position: Int,
     var idempotencyId: UUID,
 )
+
+data class UserRecommendation(
+    val id: UserRecommendationId,
+    val indexNumber: Int,
+) {
+    data class UserRecommendationId(
+        val userId: UUID,
+        val itemId: UUID,
+    )
+}

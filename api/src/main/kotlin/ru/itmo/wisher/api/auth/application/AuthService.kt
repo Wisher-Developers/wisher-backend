@@ -35,8 +35,6 @@ class AuthService(
                 ),
             )
 
-        val token: String = jwtService.generateToken(authentication)
-
-        return token
+        return jwtService.generateToken(authentication)
     }
 }

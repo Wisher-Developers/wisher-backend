@@ -23,5 +23,7 @@ interface UserRepository {
             ?: throw NoSuchId(id)
     }
 
+    fun getUserIdByRecommendationRequestId(id: UUID): UUID
+
     fun findAllByUsernameSubstring(substring: String): List<User>
 }

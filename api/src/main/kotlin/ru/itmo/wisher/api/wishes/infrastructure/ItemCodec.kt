@@ -2,7 +2,9 @@ package ru.itmo.wisher.api.wishes.infrastructure
 
 import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.wishes.domain.Item
+import ru.itmo.wisher.api.wishes.domain.UserRecommendation
 import ru.itmo.wisher.api.wishes.infrastructure.entity.ItemEntity
+import ru.itmo.wisher.api.wishes.infrastructure.entity.UserRecommendationEntity
 
 @Component
 class ItemCodec {
@@ -33,5 +35,15 @@ class ItemCodec {
             wishlistId = entity.wishlistId,
             position = entity.position,
             idempotencyId = entity.idempotencyId,
+        )
+
+    fun encode(recommendation: UserRecommendation) =
+        UserRecommendationEntity(
+            id =
+                UserRecommendationEntity.Id(
+                    userId = recommendation.id.userId,
+                    itemId = recommendation.id.itemId,
+                ),
+            indexNumber = recommendation.indexNumber,
         )
 }
