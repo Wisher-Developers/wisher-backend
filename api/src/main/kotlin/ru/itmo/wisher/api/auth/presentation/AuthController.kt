@@ -9,11 +9,13 @@ import ru.itmo.wisher.api.auth.application.AuthService
 import ru.itmo.wisher.api.auth.presentation.model.AuthResponse
 import ru.itmo.wisher.api.auth.presentation.model.LogInRequestDto
 import ru.itmo.wisher.api.auth.presentation.model.SignUpRequestDto
+import ru.itmo.wisher.api.wishes.application.ItemService
 
 @RestController
 @RequestMapping("api/auth")
 class AuthController(
     private val authService: AuthService,
+    private val itemService: ItemService,
 ) {
 
     @PostMapping("signup")

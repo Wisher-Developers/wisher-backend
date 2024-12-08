@@ -1,7 +1,6 @@
 package ru.itmo.wisher.api.wishes.application
 
 import ru.itmo.wisher.api.wishes.domain.Item
-import ru.itmo.wisher.api.wishes.domain.UserRecommendation
 import ru.itmo.wisher.api.wishes.domain.exception.ItemException
 import java.util.UUID
 
@@ -25,6 +24,4 @@ interface ItemRepository {
     }
 
     fun getAllByUserId(userId: UUID): List<Item>
-
-    fun saveUserRecommendations(recommendations: List<UserRecommendation>)
 }

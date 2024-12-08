@@ -36,6 +36,11 @@ class KafkaConsumer(
                 )
             }
 
-        recommendationJpaRepository.saveAll(recommendations)
+        recommendations.forEach {
+            try {
+                recommendationJpaRepository.save(it)
+            } catch (_: RuntimeException) {
+            }
+        }
     }
 }

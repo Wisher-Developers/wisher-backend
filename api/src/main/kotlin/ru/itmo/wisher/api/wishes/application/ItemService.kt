@@ -49,14 +49,6 @@ class ItemService(
         val newWishItemMessage = kafkaMessageBuilder.buildNewWishItemMessage(item)
         kafkaNewWishItemProducer.send(newWishItemMessage)
 
-        val items = getAllByUserId(user.id) + item
-        val buildRecommendationsMessage =
-            kafkaMessageBuilder.buildSuggestMatchingWishItemsMessage(
-                user,
-                items,
-            )
-        kafkaSuggestWishitemsProducer.send(buildRecommendationsMessage)
-
         return itemRepository.save(item)
     }
 
@@ -134,20 +126,23 @@ class ItemService(
     }
 
     fun getRecommendations(): List<Item> {
-        return User.currentOrNull()?.let {
-            itemRepository.getUserRecommendations(it.id)
+        return User.currentOrNull()?.let { user ->
+            itemRepository.getUserRecommendations(user.id).takeIf { it.isNotEmpty() }
         }
             ?: itemRepository.getRandomRecommendations()
     }
 
-    fun buildRecommendations() {
+    fun buildRecommendations(isForce: Boolean = false) {
         val user =
             User.currentOrNull()
-                ?: return
+                ?: let {
+                    println("Current user is null")
+                    return
+                }
 
         val oneDayAgo = Instant.now().minusSeconds(86400)
 
-        if (user.lastLogin.isBefore(oneDayAgo)) {
+        if (user.lastLogin.isBefore(oneDayAgo) || isForce) {
             val items = getAllByUserId(user.id)
 
             val kafkaMessage =

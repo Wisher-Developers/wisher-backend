@@ -4,7 +4,6 @@ import org.springframework.data.domain.Limit
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import ru.itmo.wisher.api.wishes.domain.Item
-import ru.itmo.wisher.api.wishes.domain.UserRecommendation
 import ru.itmo.wisher.api.wishes.infrastructure.entity.ItemJpaRepository
 import ru.itmo.wisher.api.wishes.infrastructure.entity.UserRecommendationJpaRepository
 import java.util.UUID
@@ -39,7 +38,7 @@ class ItemRepository(
     }
 
     override fun getUserRecommendations(id: UUID): List<Item> {
-        return itemJpaRepository
+        return userRecommendationJpaRepository
             .getRecommendations(id, Limit.of(RECOMMENDATIONS_LIMIT))
             .map { itemCodec.decode(it) }
     }
@@ -48,11 +47,6 @@ class ItemRepository(
         return itemJpaRepository
             .getRecommendationsUnauthorized(Limit.of(RECOMMENDATIONS_LIMIT))
             .map { itemCodec.decode(it) }
-    }
-
-    override fun saveUserRecommendations(recommendations: List<UserRecommendation>) {
-        val entities = recommendations.map { itemCodec.encode(it) }
-        userRecommendationJpaRepository.saveAll(entities)
     }
 
     override fun getAllByUserId(userId: UUID): List<Item> {

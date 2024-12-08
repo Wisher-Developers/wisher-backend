@@ -18,11 +18,6 @@ interface ItemJpaRepository : CrudRepository<ItemEntity, UUID> {
     fun findByWishlistId(wishlistId: UUID): List<ItemEntity>
 
     @Query(
-        "SELECT i FROM ItemEntity i, WishlistEntity w WHERE w.id=i.wishlistId AND w.owner.id<>?1",
-    )
-    fun getRecommendations(id: UUID, limit: Limit): List<ItemEntity>
-
-    @Query(
         "SELECT * FROM item",
         nativeQuery = true,
     )
@@ -36,7 +31,14 @@ interface ItemJpaRepository : CrudRepository<ItemEntity, UUID> {
 }
 
 @Component
-interface UserRecommendationJpaRepository : CrudRepository<UserRecommendationEntity, UserRecommendationEntity.Id>
+interface UserRecommendationJpaRepository : CrudRepository<UserRecommendationEntity, UserRecommendationEntity.Id> {
+
+    @Query(
+        "SELECT * FROM item_user WHERE user_id = ?1",
+        nativeQuery = true,
+    )
+    fun getRecommendations(id: UUID, limit: Limit): List<ItemEntity>
+}
 
 @Table(name = "item")
 @Entity
