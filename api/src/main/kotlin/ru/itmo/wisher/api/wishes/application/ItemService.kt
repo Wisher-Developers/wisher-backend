@@ -127,7 +127,9 @@ class ItemService(
 
     fun getRecommendations(): List<Item> {
         return User.currentOrNull()?.let { user ->
-            itemRepository.getUserRecommendations(user.id).takeIf { it.isNotEmpty() }
+            itemRepository.getUserRecommendations(user.id)
+                .takeIf { it.isNotEmpty() }
+                ?.filter { wishlistRepository.getById(it.wishlistId).owner.id != user.id }
         }
             ?: itemRepository.getRandomRecommendations()
     }
