@@ -11,7 +11,6 @@ import ru.itmo.wisher.api.wishes.domain.CreateItemRequest
 import ru.itmo.wisher.api.wishes.domain.Item
 import ru.itmo.wisher.api.wishes.domain.UpdateItemRequest
 import ru.itmo.wisher.api.wishes.domain.exception.UserIsNotOwnerException
-import java.time.Instant
 import java.util.UUID
 
 @Component
