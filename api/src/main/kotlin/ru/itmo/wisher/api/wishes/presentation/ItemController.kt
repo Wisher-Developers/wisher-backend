@@ -63,7 +63,7 @@ class ItemController(
 
     @PostMapping("recommendations")
     fun triggerNewRecommendations(): ResponseEntity<Void> {
-        itemService.buildRecommendations()
+        itemService.buildRecommendations(true)
 
         return ResponseEntity.noContent().build()
     }
