@@ -142,19 +142,15 @@ class ItemService(
                     return
                 }
 
-        val oneDayAgo = Instant.now().minusSeconds(86400)
+        val items = getAllByUserId(user.id)
 
-        if (user.lastLogin.isBefore(oneDayAgo) || isForce) {
-            val items = getAllByUserId(user.id)
+        val kafkaMessage =
+            kafkaMessageBuilder.buildSuggestMatchingWishItemsMessage(
+                user,
+                items,
+            )
 
-            val kafkaMessage =
-                kafkaMessageBuilder.buildSuggestMatchingWishItemsMessage(
-                    user,
-                    items,
-                )
-
-            kafkaSuggestWishitemsProducer.send(kafkaMessage)
-        }
+        kafkaSuggestWishitemsProducer.send(kafkaMessage)
     }
 
     fun getAllByUserId(userId: UUID): List<Item> {
