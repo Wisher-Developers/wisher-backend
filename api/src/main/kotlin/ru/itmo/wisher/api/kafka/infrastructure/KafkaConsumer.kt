@@ -45,9 +45,8 @@ class KafkaConsumer(
                 }
 
         recommendations.forEach {
-            try {
+            if (itemRepository.findById(it.id.itemId) != null) {
                 recommendationJpaRepository.save(it)
-            } catch (_: RuntimeException) {
             }
         }
     }
