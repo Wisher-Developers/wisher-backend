@@ -37,7 +37,7 @@ interface UserRecommendationJpaRepository : CrudRepository<UserRecommendationEnt
         "SELECT * FROM item_user WHERE user_id = ?1",
         nativeQuery = true,
     )
-    fun getRecommendations(id: UUID, limit: Limit): List<ItemEntity>
+    fun getRecommendations(id: UUID, limit: Limit): List<UserRecommendationEntity>
 }
 
 @Table(name = "item")

@@ -40,7 +40,8 @@ class ItemRepository(
     override fun getUserRecommendations(id: UUID): List<Item> {
         return userRecommendationJpaRepository
             .getRecommendations(id, Limit.of(RECOMMENDATIONS_LIMIT))
-            .map { itemCodec.decode(it) }
+            .sortedBy { it.indexNumber }
+            .mapNotNull { findById(it.id.itemId) }
     }
 
     override fun getRandomRecommendations(): List<Item> {
